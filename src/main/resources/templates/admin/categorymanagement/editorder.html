@@ -1,0 +1,29 @@
+<div th:fragment="editorder">
+	<div th:replace="fragments/content-header :: content-header (text='Zmiana kolejności wyświetlania kategorii')"></div>
+	<div class="row">
+		<div class="col-1 col-lg-3"></div>
+		<div class="col-12 col-lg-6 text-center">
+			<form method="POST" th:action="@{/admin/categorymanagement/editorder}" th:object="${catOrder}" class="mt-3">
+				<table class="table table-sm mt-2 table-bordered border-dark bg-white">
+					<tr class="bg-primary text-white">
+						<th style="width: 70%;" class="text-center">Kategoria</th>
+						<th style="width: 30%;" class="text-center">Pozycja</th>
+					</tr>
+					<span th:each="category : ${categories}">
+						<tr>
+							<td th:text="${category.name}" class="align-middle text-center"></td>
+							<td class="align-middle"><input type="number" class="form-control text-center" min="1" max="1000" th:field="*{order[__${category.id}__]}" th:value="${catOrder.order[__${category.id}__]}" /></td>
+						</tr>
+					</span>
+				</table>
+				<div class="mt-3">
+					<button type="submit" class="btn btn-primary w-50 rounded-0 mb-1 border border-1 border-dark text-white">Zapisz zmiany</button>
+				</div>
+			</form>
+			<div class="mt-3">
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin/categorymanagement})"></a>
+			</div>
+		</div>
+		<div class="col-1 col-lg-3"></div>
+	</div>
+</div>

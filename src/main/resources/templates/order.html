@@ -1,0 +1,32 @@
+<div th:fragment="order">
+	<div th:replace="fragments/content-header :: content-header (text='Zamówienie')"></div>
+	<div th:if="${order}">
+		<div class="row">
+			<h2 class="text-center"><u>Wybór metody płatności</u></h2>
+			<h3 class="text-center">Usługa: <u th:text="${order.service.name}"></u></h3>
+			<div class="col-3"></div>
+			<div class="col-12 col-lg-6 text-center">
+				<form method="POST" th:action="@{/order/payment}" th:object="${paymentMethodForm}" class="text-center">
+					<div th:if="${paymentMethods == null OR paymentMethods.isEmpty()}">
+						Brak dostępnych możliwości zakupu tej usługi. W przypadku płatności środkami na koncie (portfel) należy najpierw zalogować się.
+						<div class="mt-1"><a sec:authorize="!isAuthenticated()" class="col-6 col-lg-4 btn btn-primary rounded-0 border border-dark text-white" th:href="@{/login}">Logowanie</a></div>
+					</div>
+					<div th:if="${paymentMethods != null AND !paymentMethods.isEmpty()}">
+						<div class="form-group" th:each="method, stat : ${paymentMethods}">
+							<div class="form-check">
+								<label class="form-check-label btn border border-1 border-dark h5 mt-2 mb-3 pb-1 bg-primary text-white rounded-0" style="display:inline-block; width:100%">
+									<span th:text="${method.displayName}"></span>
+									<input class="form-check-input border border-dark" style="position: relative; left: 15px" type="radio" name="paymentMethod" id="paymentMethod" th:name="paymentMethod" th:value="${method}" th:checked="${stat.first}">
+								</label>
+							</div>
+						</div>
+						<input type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white" value="Przejdź do płatności">
+					</div>
+				</form>
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/service/{id}(id=__${order.service.id}__)})"></a>
+			</div>
+			<div class="col-3"></div>
+		</div>
+	</div>
+	<h2 th:unless="${order}">Nieznane zamówienie.</h2>
+</div>

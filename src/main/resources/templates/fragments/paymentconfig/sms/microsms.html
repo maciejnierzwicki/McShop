@@ -1,0 +1,14 @@
+<div th:fragment="microsms">
+	<form method="POST" th:object="${smsForm}" th:action="@{/admin/paymentconfiguration/sms}" class="border border-dark mt-3 text-center">
+		<h4 class="bg-primary text-white border-bottom border-dark">MicroSMS</h4>
+		<div class="form-group">
+			<label for="userId" class="fw-bold">ID partnera w MicroSMS</label>
+			<input type="number" min="0" class="form-control text-center w-75 mx-auto" name="userId" id="userId" th:field="*{userId}" th:value="${smsForm.userId}" required />
+		</div>
+		<div class="form-group">
+			<label for="serviceId" class="fw-bold">ID usługi w MicroSMS</label>
+			<input type="number" min="0" class="form-control text-center w-75 mx-auto" name="serviceId" id="serviceId" th:field="*{serviceId}" th:value="${smsForm.serviceId}" required />
+		</div>
+		<button class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white" type="submit">Zapisz</button>
+	</form>
+</div>

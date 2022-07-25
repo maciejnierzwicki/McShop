@@ -1,0 +1,45 @@
+<div th:fragment="orderDetailsTable">
+	<div th:unless="${order}">Nieznane zamówienie.</div>
+	<div th:if="${order}" class="col-md-6 mx-auto table-responsive">
+		<table class="table table-sm table-bordered border-dark bg-white mt-3">
+			<tr>
+				<th colspan="2" class="text-center bg-primary text-white">Zamówienie nr <span th:text="${order.id}"></span></th>
+			</tr>
+			<tr>
+				<td>Data</td><td th:text="${#dates.format(order.creationDate, properties.dateFormat)}"></td>
+			</tr>
+			<tr>
+				<td>Typ</td><td th:text="${order.orderType.displayName}"></td>
+			</tr>
+			<th:block th:if="${order.orderType.name == 'SERVICE_ORDER'}">
+				<tr>
+					<td>Usługa</td><td th:text="${order.service.name}"></td>
+				</tr>
+				<tr>
+					<td>Kategoria</td><td th:text="${order?.service?.category?.name}"></td>
+				</tr>
+				<tr>
+					<td>Serwer</td><td th:text="${order?.service?.server?.name}"></td>
+				</tr>
+				<tr>
+					<td>Gracz (Odbiorca)</td><td th:text="${order.playerName}"></td>
+				</tr>
+			</th:block>
+			<tr>
+				<td>Użytkownik (Zamawiający)</td><td th:text="${order?.user?.username}"></td>
+			</tr>
+			<tr th:if="${order.orderType.name == 'FUNDS_ORDER'}">
+				<td>Kwota doładowania</td><td th:text="${#numbers.formatDecimal(order.amount,1,2,'COMMA') + ' zł'}"></td>
+			</tr>
+			<tr>
+				<td>Całkowita kwota do zapłaty</td><td th:text="${#numbers.formatDecimal(order.finalPrice,1,2,'COMMA') + ' zł'}"></td>
+			</tr>
+			<tr>
+				<td>Metoda płatności</td><td th:text="${order.paymentMethod.displayName}"></td>
+			</tr>
+			<tr>
+				<td>Status</td><td th:text="${order.status.displayName}"></td>
+			</tr>
+		</table>
+	</div>
+</div>

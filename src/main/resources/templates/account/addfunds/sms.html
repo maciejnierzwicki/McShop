@@ -1,0 +1,28 @@
+<div th:fragment="sms">
+	<div th:replace="fragments/content-header :: content-header (text='Doładuj portfel - SMS')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="col-8 col-lg-4 text-center">
+			<div class="border border-dark mt-3">
+				<h4 class="bg-primary text-white border-bottom border-dark">Doładuj portfel SMS</h4>
+				Aby doładować portfel wyślij SMS o treści <b>[[${smsCode.message}]]</b> pod numer <b>[[${smsCode.phoneNumber}]]</b>.<br>
+				Koszt SMS'a: <span th:text="${#numbers.formatDecimal(smsCode.priceNet,1,2,'COMMA') + ' zł '}" class="fw-bold"></span>(<span th:with="gross=${smsCode.priceNet * 1.23}" th:text="${#numbers.formatDecimal(gross,1,2,'COMMA')} + ' zł z VAT'" class="fw-bold"></span>)<br>
+				Twój portfel zostanie doładowany kwotą <span th:text="${#numbers.formatDecimal(smsCode.fundsToAdd,1,2,'COMMA')}" class="fw-bold"></span> zł.
+				Poniżej wpisz otrzymany kod.
+				<form method="POST" th:object="${smsCodeForm}" th:action="@{/account/addfunds/sms/payment}" class="mt-3">
+					<div class="form-group">
+						<label for="code" class="fw-bold">Kod</label>
+						<input type="text" name="code" id="code" th:field="*{code}" class="form-control text-center w-75 mx-auto" required/>
+						<button type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white">OK</button>
+					</div>
+				</form>
+				<div th:if="${valid == false}">Kod nieprawidłowy.</div>
+				<div th:if="${valid}">Kod prawidłowy, środki zostały dodane do Twojego portfela. </div>
+			</div>
+			<div class="mt-3">
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/account/addfunds})"></a>
+			</div>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+	</div>
+</div>

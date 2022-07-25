@@ -1,0 +1,37 @@
+<div th:fragment="home">
+	<div th:replace="fragments/content-header :: content-header (text='Kody SMS')"></div>
+	<div class="row">
+		<div class="col-lg-3"></div>
+		<div class="col-12 col-lg-6 text-center">
+			<div class="table-responsive">
+				<table class="table table-sm mt-3 table-bordered border-dark bg-white">
+					<tr class="bg-primary text-white align-middle text-center">
+						<th>Cena netto</th>
+						<th>Nr. tel</th>
+						<th>Treść sms</th>
+						<th>Kwota doładowania</th>
+						<th colspan="2">Akcje</th>
+					</tr>
+					<tr th:each="code : ${codes}" class="text-center align-middle">
+						<td th:text="${code.priceNet}">cena</td>
+						<td th:text="${code.phoneNumber}">nr</td>
+						<td th:text="${code.message}">wiadomość</td>
+						<td th:text="${code.fundsToAdd}">kwota doładowania</td>
+						<td><a th:href="@{/admin/paymentconfiguration/sms/codes/edit?codeid=__${code.id}__}" class="btn btn-sm btn-primary text-white border border-dark rounded-0">Edytuj</a></td>
+						<td><a th:href="@{/admin/paymentconfiguration/sms/codes/delete?codeid=__${code.id}__}" class="btn btn-sm btn-primary text-white border border-dark rounded-0">Usuń</a></td>
+					</tr>
+					<tr th:if="${codes.isEmpty()}">
+						<td colspan="6">Brak kodów dla aktywnego dostawcy płatności SMS.</td>
+					</tr>
+				</table>
+			</div>
+			<div class="mt-3">
+				<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/paymentconfiguration/sms/codes/add}">Dodaj nowy kod</a>
+			</div>
+			<div class="mt-3">
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin/paymentconfiguration/sms})"></a>
+			</div>
+		</div>
+		<div class="col-lg-3"></div>
+	</div>
+</div>

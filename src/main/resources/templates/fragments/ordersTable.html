@@ -1,0 +1,44 @@
+<div th:fragment="ordersTable(viewType)" class="table-responsive">
+	<th:block th:if="${orders} AND ${!orders.isEmpty()}">
+		<table class="table table-sm mt-2 table-bordered border-dark bg-white text-center align-middle">
+				<tr class="bg-primary text-white text-center">
+					<th>Data</th>
+					<th>Typ</th>
+					<th>Użytkownik</th>
+					<th>Status</th>
+					<th>Więcej</th>
+				</tr>
+			<th:block th:each="order : ${orders}">
+				<tr>
+					<td th:text="${#dates.format(order.creationDate, properties.dateFormat)}">Data zamówienia</td>
+					<td th:text="${order.orderType.displayName}">Typ zamówienia</td>
+					<td th:text="${order?.user?.username}">Użytkownik zamawiający</td>
+					<td th:text="${order.status.displayName}">Status</td>
+					<td th:if="${viewType == 'ADMIN'}"><a class="btn btn-primary btn-sm rounded-0 border border-dark text-white" th:href="@{/admin/ordermanagement/details/{id}(id=${order.id})}">Szczegóły</a></td>
+					<td th:if="${viewType == 'USER'}"><a class="btn btn-primary btn-sm rounded-0 border border-dark text-white" th:href="@{/account/orders/details/{id}(id=${order.id})}">Szczegóły</a></td>					
+				</tr>
+			</th:block>
+		</table>
+		<div class="mt-3 text-center form-group">
+			<div class="form-group">
+				<form th:if="${pageForm.page > 1}" method="POST" style="display: inline" th:object="${pageForm}" th:action="@{|${#httpServletRequest.requestURI}|}">
+					<input type="hidden" name="page" th:value="${pageForm.page - 1}"/>
+					<button type="submit" class="btn btn-primary rounded-0 border border-1 border-dark text-white mt-2 mb-1">&lt;&lt; Wstecz</button>
+				</form>
+				<form th:if="${allPages > pageForm.page}" method="POST" style="display: inline" th:object="${pageForm}" th:action="@{|${#httpServletRequest.requestURI}|}">
+					<input type="hidden" name="page" th:value="${pageForm.page + 1}"/>
+					<button type="submit" class="btn btn-primary rounded-0 border border-1 border-dark text-white mt-2 mb-1">Dalej &gt;&gt; </button>
+				</form>
+			</div>
+			<form class="form-group" method="POST" th:object="${pageForm}" th:action="@{|${#httpServletRequest.requestURI}|}">
+				<div class="col-2 mx-auto">
+					<label for="page">Strona</label>
+					<input type="number" id="page" min="1" th:max="${allPages}" th:field="*{page}" th:value="${pageForm.page}" class="form-control text-center"/>
+				</div>
+				<button type="submit" class="btn btn-primary rounded-0 border border-1 border-dark text-white mt-2 mb-1">Skok do strony</button>
+			</form>
+			Wszystkich stron: <b th:text="${allPages}"></b>
+		</div>
+	</th:block>
+	<div th:if="!${orders} OR ${orders.isEmpty()}" class="text-center">Brak zamówień.</div>
+</div>

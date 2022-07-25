@@ -1,0 +1,17 @@
+<div th:fragment="category">
+	<div th:replace="fragments/content-header :: content-header (text='Kategoria')"></div>
+	<div class="row">
+		<div class="col"></div>
+		<div class="col text-center">
+			<u><h2 th:if="${server}" th:text="${server.name}">Nazwa serwera</h2></u>
+			<div th:unless="${server}">Nieznany serwer.</div>
+			<u><h2 th:if="${category}" th:text="${category.name}">Nazwa kategorii</h2></u>
+			<div th:unless="${category}">Nieznana kategoria.</div>
+			<div th:unless="${services}">Brak usług do wyświetlenia.</div>
+			<div th:if="${services}" class="col-12 col-lg-6 btn-group-vertical mt-2 mb-1">
+				<a th:each="service : ${services}" class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/service/{id}(id=${service.id})}" th:text="${service.name}">Nazwa usługi</a>
+			</div>
+		</div>
+		<div class="col"></div>
+	</div>
+</div>

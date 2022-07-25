@@ -1,0 +1,43 @@
+<div th:fragment="home">
+	<div th:replace="fragments/content-header :: content-header (text='Konfiguracja podstron')"></div>
+		<h2 class="text-center"><u>Konfiguracja podstron</u></h2>
+		<div class="row">
+			<div class="col-2 col-lg-4"></div>
+			<div class="col-8 col-lg-4 mt-2 mb-1 text-center">
+			
+				<form method="POST" th:action="@{/admin/subpagesconfiguration}" th:object="${subpagesForm}">
+					<table class="table table-bordered border-dark bg-white">
+						<tr>
+							<td colspan="2" class="text-center bg-primary text-white">Aktywne podstrony</td>
+						</tr>
+						<tr>
+							<td>Regulamin</td>
+							<td><input type="checkbox" class="form-check-input" name="rulesPageEnabled" id="rulesPageEnabled" th:field="*{rulesPageEnabled}" th:checked="${subpagesForm.rulesPageEnabled}" /></td>
+						</tr>
+						<tr>
+							<td>Kontakt</td>
+							<td><input type="checkbox" class="form-check-input" name="contactPageEnabled" id="contactPageEnabled" th:field="*{contactPageEnabled}" th:checked="${subpagesForm.contactPageEnabled}" /></td>
+						</tr>
+						<tr>
+							<td>O nas</td>
+							<td><input type="checkbox" class="form-check-input" name="aboutPageEnabled" id="aboutPageEnabled" th:field="*{aboutPageEnabled}" th:checked="${subpagesForm.aboutPageEnabled}" /></td>
+						</tr>
+						<tr>
+							<td colspan="2" class="m-0 p-0"><button class="w-50 m-0 btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white" type="submit">Zapisz</button></td>
+						</tr>
+					</table>
+					
+					
+				</form>
+				<div class="btn-group-vertical mt-3 w-100">
+					<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/subpagesconfiguration/rules}">Konfiguracja strony REGULAMIN</a>
+					<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/subpagesconfiguration/contact}">Konfiguracja strony KONTAKT</a>
+					<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/subpagesconfiguration/about}">Konfiguracja strony O NAS</a>
+				</div>
+				<div>
+					<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin})"></a>
+				</div>
+			</div>
+			<div class="col-8 col-lg-4"></div>
+		</div>
+</div>

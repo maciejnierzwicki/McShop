@@ -1,0 +1,16 @@
+<div th:fragment="microsms">
+	<form method="POST" th:object="${smsCodeForm}" th:action="@{/order/payment/sms}" class="mt-3 mb-3 border border-dark">
+		<h4 class="bg-primary text-white border-bottom border-dark">Zapłać przez MicroSMS</h4>
+		<div class="mt-3 mb-3"><img th:src="@{/images/microsms.png}" class="col-9 mx-auto border border-dark"/></div>
+		Aby zrealizować usługę wyślij SMS o treści <span th:text="${order.service.smsCode.message}" class="fw-bold"></span> pod numer <span th:text="${order.service.smsCode.phoneNumber}" class="fw-bold"></span>.<br>
+		Koszt SMS'a: <span th:text="${#numbers.formatDecimal(order.service.smsCode.priceNet,1,2,'COMMA') + ' zł '}" class="fw-bold"></span>(<span th:with="gross=${order.service.smsCode.priceNet * 1.23}" th:text="${#numbers.formatDecimal(gross,1,2,'COMMA')} + ' zł z VAT'" class="fw-bold"></span>)<br>
+		Poniżej wpisz otrzymany kod.
+		<div class="form-group mt-3">
+			<label for="code">Kod</label>
+			<input type="text" name="code" id="code" th:field="*{code}" class="form-control text-center w-75 mx-auto" required />
+			<button type="submit" class="btn btn-primary rounded-0 mt-3 mb-3 border border-1 border-dark text-white">OK</button>
+		</div>
+	</form>
+	<div th:if="${valid}">Kod prawidłowy, za moment nastąpi realizacja usługi. Dziękujemy za zakupy w naszym sklepie. </div>
+	<div th:if="${valid == false}">Kod nieprawidłowy.</div>
+</div>

@@ -1,0 +1,5 @@
+<h1 class="text-center">O nas</h1>
+<div class="text-center mt-3">
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi et turpis quis nisl dignissim fringilla et a mi. Integer blandit diam eros, id pulvinar quam vestibulum ut. Integer a ultricies metus, id accumsan erat. Pellentesque in nisi et enim ultrices elementum semper sed urna. Phasellus lorem tortor, volutpat ac ligula maximus, blandit iaculis enim. Maecenas molestie lectus et libero egestas, id aliquam augue tempor. Fusce enim lorem, finibus feugiat sodales rutrum, ultricies non leo. Ut dictum, lectus quis accumsan imperdiet, lacus lectus lacinia mi, et ultricies erat enim in velit. Fusce lorem nisl, elementum sed diam ac, condimentum blandit mauris. Curabitur augue felis, consequat posuere purus et, fermentum lacinia lacus. Sed id arcu tincidunt ipsum mattis posuere at nec leo.
+</div>

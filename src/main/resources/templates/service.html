@@ -1,0 +1,64 @@
+<div th:fragment="service" class="row">
+	<div th:replace="fragments/content-header :: content-header (text='Usługa')"></div>
+	<div class="col-12 col-md-3">
+		<div class="table-responsive">
+			<table class="table table-sm mt-2 table-bordered border-dark bg-white">
+				<tr class="bg-primary text-white align-middle text-center">
+					<td>Serwer</td>
+				</tr>
+				<tr>
+					<td><a th:href="@{/server/{id}(id=${service.server.id})}" th:text="${service.server.name}" class="btn btn-sm btn-primary text-white border border-dark rounded-0 w-100"></a></td>
+				</tr>
+				<tr class="bg-primary text-white align-middle text-center">
+					<td>Kategoria</td>
+				</tr>
+				<tr>
+					<td><a th:href="@{/category/{id}/server={serverid}(id=${service.category.id},serverid=${service.server.id})}" th:text="${service.category.name}" class="btn btn-sm btn-primary text-white border border-dark rounded-0 w-100"></a></td>
+				</tr>
+			</table>	
+		</div>	
+	</div>
+	<div th:if="${service}" class="col-12 col-md-6 mx-auto">
+		<u><h2 th:text="${service.name}" class="text-center">Nazwa usługi</h2></u>
+		<div class="border border-dark">
+			<div class="col-12 text-center bg-primary text-white border-bottom border-dark" th:text="'Opis usługi'"></div>
+			<div class="col-12 bg-dark" style="height: 5px"></div>
+			<div th:utext="${service.description}" class="col-12 ps-1 pe-1 text-break">
+				Opis usługi
+			</div>
+		</div>
+	</div>
+	<div th:unless="${service}" class="col-4"><h2 th:unless="${service}">Nieznany przedmiot.</h2></div>
+	<div class="col-12 col-md-3 float-end">
+		<div th:if="${hasAnyWorkingPaymentMethod}">
+			<div class="table-responsive">
+				<table class="table table-sm mt-2 table-bordered border-dark bg-white">
+					<thead>
+						<tr class="bg-primary text-white align-middle text-center">
+							<th class="text-center" colspan="2">Cena</th>
+						</tr>
+						<tr th:if="${service.price != null AND service.price > 0}">
+							<td>Portfel</td><td class="fw-bold"><span th:text="${#numbers.formatDecimal(__${service.price}__,1,2,'COMMA')}">##.##</span> zł</td>
+						</tr>
+						<tr th:if="${service.priceBankTransfer != null AND service.priceBankTransfer > 0}">
+							<td>Przelew</td><td class="fw-bold"><span th:text="${#numbers.formatDecimal(__${service.priceBankTransfer}__,1,2,'COMMA')}">##.##</span> zł</td>
+						</tr>
+						<tr th:if="${service.smsCode != null}" th:with="priceGross=${service.smsCode.priceNet * 1.23}" class="align-middle">
+							<td>SMS</td><td class="fw-bold"><span th:text="${#numbers.formatDecimal(__${service.smsCode.priceNet}__,1,2,'COMMA')}"></span> zł (<span th:text="${#numbers.formatDecimal(__${priceGross}__,1,2,'COMMA')}">##.##</span> zł z VAT)</td>
+						</tr>
+					</thead>
+				</table>
+			</div>
+			<form method="POST" th:action="@{/order}" th:object="${order}">
+				<div class="form-group text-center">
+					<label for="playerName">Nick gracza</label>
+					<input type="text" class="form-control text-center" name="playerName" id="playerName" th:field="*{playerName}" placeholder="Nick w grze" maxlength="16" required>
+				</div>
+				<div>
+					<input type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white mx-auto w-100" value="Kup">
+				</div>
+			</form>
+		</div>
+		<div th:unless="${hasAnyWorkingPaymentMethod}" class="mt-2 mb-2  ps-1 pe-1 bg-danger text-white text-center border border-dark">Brak możliwości zakupu tej usługi.</div>
+	</div>
+</div>

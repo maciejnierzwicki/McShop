@@ -1,0 +1,12 @@
+<div th:fragment="addfunds_banktransfer">
+	<div th:replace="fragments/content-header :: content-header (text='Doładuj portfel - potwierdzenie')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="col-8 col-lg-4 text-center">
+			<div th:if="${bankTransferConfig instance T(DotPayConfig)" th:replace="fragments/account/addfunds/banktransfer/dotpay :: dotpay"></div>
+			<div class="mt-3">
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/account/addfunds})"></a>
+			</div>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+</div>

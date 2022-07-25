@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+	<head> </head>
+	<body>
+		<div th:fragment="navigation" class="container bg-light">
+			<div class="row border border-dark">
+				<nav class="btn-group-sm col-md-12">
+					<a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="btn btn-primary rounded-0 border border-dark text-white">Zaloguj się</a>
+					<a sec:authorize="!isAuthenticated()" th:href="@{/register}" class="btn btn-primary rounded-0 border border-dark text-white">Zarejestruj się</a>
+					<a sec:authorize="isAuthenticated()" th:href="@{/account}" class="btn btn-primary rounded-0 border border-dark text-white">Moje konto</a>
+					<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/admin}" class="btn btn-primary rounded-0 border border-dark text-white">Panel admina</a>
+					<a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="btn btn-primary rounded-0 border border-dark text-white">Wyloguj się</a>
+				</nav>
+			</div>
+		</div>
+	</body>
+</html>

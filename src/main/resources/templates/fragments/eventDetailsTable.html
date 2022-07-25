@@ -1,0 +1,36 @@
+<div th:fragment="eventDetailsTable">
+	<div th:unless="${event}">Nieznane zdarzenie.</div>
+	<div th:if="${event}" class="col-md-6 mx-auto table-responsive">
+		<table class="table table-sm table-bordered border-dark bg-white">
+			<tr>
+				<th colspan="2" class="text-center bg-primary text-white">Zdarzenie nr <span th:text="${event.id}"></span></th>
+			</tr>
+			<tr>
+				<td>Data</td><td th:text="${#dates.format(event.date, properties.dateFormat)}"></td>
+			</tr>
+			<tr>
+				<td>Typ zdarzenia</td><td th:text="${event.type.displayName}"></td>
+			</tr>
+			<th:block th:with="meta=${event?.meta}">
+				<tr th:if="${meta.actor}">
+					<td>Użytkownik (Wykonawca)</td><td th:text="${meta.actor.username}"></td>
+				</tr>
+				<tr th:if="${meta.service}">
+					<td>Usługa</td><td th:text="${meta.service.id} + ' (' + ${meta.service.name} + ')'"></td>
+				</tr>
+				<tr th:if="${meta.category}">
+					<td>Kategoria</td><td th:text="${meta.category.id} + ' (' + ${meta.category.name} + ')'"></td>
+				</tr>
+				<tr th:if="${meta.server}">
+					<td>Serwer</td><td th:text="${meta.server.id} + ' (' + ${meta.server.name} + ')'"></td>
+				</tr>
+				<tr th:if="${meta.order}">
+					<td>Zamówienie</td><td><a th:href="@{/admin/ordermanagement/details/{id}(id=__${meta.order.id}__)}" target="_blank" th:text="${meta.order.id}"></a></td>
+				</tr>
+				<tr th:if="${meta.user}">
+					<td>Użytkownik</td><td th:text="${meta.user.username}"></td>
+				</tr>
+			</th:block>
+		</table>
+	</div>
+</div>

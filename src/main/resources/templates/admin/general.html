@@ -1,0 +1,64 @@
+<div th:fragment="general">
+	<div th:replace="fragments/content-header :: content-header (text='Konfiguracja ogólna')"></div>
+	<div class="row">
+		<div class="col-1 col-lg-3"></div>
+		<div class="col-12 col-lg-6 text-center">
+			<form method="POST" th:action="@{/admin/general}" th:object="${propertiesForm}" class="border border-dark mt-3 bg-white">
+				<h4 class="text-center bg-primary text-white border-bottom border-dark">Konfiguracja ogólna</h4>
+				<div th:if="${#fields.hasAnyErrors()}"> Popraw wskazane poniżej błędy i spróbuj ponownie.</div>
+				<div th:if="${#fields.hasErrors('siteTitle')}" th:errors="*{siteTitle}">Błąd tytułu strony.</div>
+				<div th:if="${#fields.hasErrors('maxOrdersPerPage')}" th:errors="*{maxOrdersPerPage}">Błąd liczby zamówień na stronę.</div>
+				<div th:if="${#fields.hasErrors('dateFormat')}" th:errors="*{dateFormat}">Błąd formatu daty.</div>
+				<div class="form-group mt-3 w-75 mx-auto">
+					<label for="siteTitle" class="w-100 fw-bold">Tytuł strony</label>
+					<input type="text" maxlength="40" class="form-control text-center mt-1 mb-1 w-75 mx-auto" id="siteTitle" name="siteTitle" th:field="*{siteTitle}" autofocus required />
+				</div>
+				<div class="form-group mt-3 w-75 mx-auto">
+					<label for="siteUrl" class="w-100 fw-bold">Adres strony</label>
+					<input type="text" class="form-control text-center mt-1 mb-1 w-75 mx-auto" name="siteUrl" th:field="*{siteUrl}">
+					<small class="text-form text-muted">Prawidłowy adres strony jest potrzebny do generowania niektórych linków.</small>
+				</div>
+				<div class="form-group mt-3 w-75 mx-auto">
+					<label for="playerPlaceholder" class="w-100 fw-bold">Znacznik nazwy gracza w komendach usług</label>
+					<input type="text" maxlength="20" class="form-control text-center mt-1 mb-1 w-75 mx-auto" id="playerPlaceholder" name="playerPlaceholder" th:field="*{playerPlaceholder}" required />
+						<div class="form-check">
+							<label for="playerPlaceholderUpdateServices" class="form-check-label">
+								<input type="checkbox" class="form-check-input" id="playerPlaceholderUpdateServices" name="playerPlaceholderUpdateServices" th:field="*{playerPlaceholderUpdateServices}" checked="checked"/>
+								<small>Aktualizacja znaczników w komendach istniejących usług</small>
+							</label>
+						</div>
+				</div>
+				<div class="form-group mt-3 w-75 mx-auto">
+					<label for="maxOrdersPerPage" class="w-100 fw-bold">Max. liczba wyświetlanych zamówień na stronie</label>
+					<input type="number" min="1" class="form-control text-center mt-1 mb-1 w-75 mx-auto" id="maxOrdersPerPage" name="maxOrdersPerPage" th:field="*{maxOrdersPerPage}" required />
+				</div>
+				<div class="form-group mt-3 w-75 mx-auto">
+					<label for="maxOrdersPerPage" class="w-100 fw-bold">Max. liczba wyświetlanych zdarzeń na stronie w dzienniku zdarzeń</label>
+					<input type="number" min="1" class="form-control text-center mt-1 mb-1 w-75 mx-auto" id="maxEventsPerPage" name="maxEventsPerPage" th:field="*{maxEventsPerPage}" required />
+				</div>
+				<div class="form-group mt-3 w-75 mx-auto">
+					<label for="dateFormat" class="w-100 fw-bold">Format daty i czasu</label>
+					<input type="text" class="form-control text-center mt-1 mb-1 w-75 mx-auto" id="dateFormat" name="dateFormat" th:field="*{dateFormat}" required />
+				</div>
+				<div class="form-group mt-3 w-75 mx-auto">
+					<label for="dateFormat" class="w-100 fw-bold">Format daty i czasu w dzienniku zdarzeń</label>
+					<input type="text" class="form-control text-center mt-1 mb-1 w-75 mx-auto" id="eventDateFormat" name="eventDateFormat" th:field="*{eventDateFormat}" required />
+				</div>
+				<div class="form-group mt-3 w-75 mx-auto">
+					<label class="w-100 fw-bold">Inne</label>
+					<div class="form-check">
+						<label for="serversColumn" class="form-check-label" >
+							<input type="checkbox" class="form-check-input mt-1 mb-1" name="serversColumn" id="serversColumn" th:field="*{serversColumn}" th:checked="${propertiesForm.serversColumn}"/>
+							Wyświetlanie oddzielnej kolumny z serwerami
+						</label>
+					</div>
+				</div>
+				<button class="btn btn-primary w-50 rounded-0 mt-3 mb-1 border border-1 border-dark text-white" type="submit">Zapisz</button>
+			</form>
+			<div class="mt-3">
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin})"></a>
+			</div>
+		</div>
+		<div class="col-1 col-lg-3"></div>
+	</div>
+</div>

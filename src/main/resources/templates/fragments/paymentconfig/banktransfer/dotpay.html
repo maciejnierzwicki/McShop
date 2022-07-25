@@ -1,0 +1,10 @@
+<div th:fragment="dotpay">
+	<form method="POST" th:object="${bankTransferForm}" th:action="@{/admin/paymentconfiguration/banktransfer}" class="border border-dark mt-3 text-center">
+		<h4 class="bg-primary text-white border-bottom border-dark">DotPay</h4>
+		<div class='form-group'>
+			<label for="shopId" class="fw-bold">ID sklepu w DotPay</label>
+			<input type="number" class="form-control text-center w-75 mx-auto" name="shopId" id="shopId" th:field="*{shopId}" th:value="${bankTransferForm.shopId}" required />
+		</div>
+		<button class="btn btn-primary rounded-0 mt-3 mb-1 border border-1 border-dark text-white" type="submit">Zapisz</button>
+	</form>
+</div>

@@ -1,0 +1,8 @@
+<div th:fragment="contact">
+	<div th:replace="fragments/content-header :: content-header (text='Kontakt')"></div>
+	<div class="row">
+		<div class="col">
+			<div th:utext="${content}">TREŚĆ</div>
+		</div>
+	</div>
+</div>

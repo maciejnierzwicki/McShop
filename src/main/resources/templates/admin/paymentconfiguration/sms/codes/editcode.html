@@ -1,0 +1,44 @@
+<div th:fragment="editcode">
+	<div th:replace="fragments/content-header :: content-header (text='Edytowanie kodu SMS')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="col-8 col-lg-4 text-center">
+			<div th:if="${smsCodeForm}">
+				<form method="POST" th:object="${smsCodeForm}" th:action="@{/admin/paymentconfiguration/sms/codes/edit?codeid={id}(id=${id})}" class="border border-dark mt-3">
+					<h4 class="bg-primary text-white border-bottom border-dark">Edytowanie kodu SMS</h2>
+					<div th:if="${#fields.hasAnyErrors()}"> Popraw wskazane poniżej błędy i spróbuj ponownie.</div>
+					<div th:if="${#fields.hasErrors('priceNet')}" th:errors="*{priceNet}">Błąd ceny.</div>
+					<div th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}">Błąd nr tel.</div>
+					<div th:if="${#fields.hasErrors('message')}" th:errors="*{message}">Błąd wiadomości.</div>
+					<div class="form-group">
+						<label for="priceNet" class="fw-bold">Cena netto</label>
+						<input type="number" step="0.01" min="0" class="form-control text-center w-75 mx-auto" name="priceNet" id="priceNet" th:field="*{priceNet}" th:value="${smsCodeForm.priceNet}" required />
+					</div>
+					<div class="form-group">
+						<label for="phoneNumber" class="fw-bold">Nr tel.</label>
+						<input type="number" min="0" class="form-control text-center w-75 mx-auto" name="phoneNumber" id="phoneNumber" th:field="*{phoneNumber}" th:value="${smsCodeForm.phoneNumber}" required />
+					</div>
+					<div class="form-group">
+						<label for="message" class="fw-bold">Treść SMS'a</label>
+						<input type="text" class="form-control text-center w-75 mx-auto" name="message" id="message" th:field="*{message}" th:value="${smsCodeForm.message}" required />
+					</div>
+					<div class="form-group">
+						<label for="fundsToAdd" class="fw-bold">Kwota doładowania portfela</label>
+						<input type="number" step="0.01" min="0" class="form-control text-center w-75 mx-auto" name="fundsToAdd" id="fundsToAdd" th:field="*{fundsToAdd}" th:value="${smsCodeForm.fundsToAdd}" required />
+						<small id="fundsToAddHelp" class="form-text text-muted">Kwota, jaką zostanie zasilony portfel użytkownika po doładowaniu tym kodem. Wprowadzenie 0 wyłączy doładowania.</small>
+					</div>
+					<div class="mt-3">
+						<button class="btn btn-primary w-50 rounded-0 mt-2 mb-1 border border-1 border-dark text-white" type="submit">Zapisz</button>
+					</div>
+				</form>
+			</div>
+			<div th:unless="${smsCodeForm}">
+				Nie znaleziono kodu sms.
+			</div>
+			<div class="mt-3">
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin/paymentconfiguration/sms/codes})"></a>
+			</div>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+	</div>
+</div>

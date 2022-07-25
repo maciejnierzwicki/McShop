@@ -1,0 +1,88 @@
+{
+  "properties": [
+    {
+	  "name": "files.main-properties-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to main configuration file."
+	},
+    {
+	  "name": "files.database-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to database configuration file."
+	},
+    {
+	  "name": "files.subpages-properties-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to subpages configuration file."
+	},
+    {
+	  "name": "files.setup-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to setup.progress file."
+	},
+    {
+	  "name": "files.templates-dir-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to templates directory."
+	},
+    {
+	  "name": "files.rules-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to rules.txt file."
+	},
+    {
+	  "name": "files.contact-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to contact.txt file."
+	},
+    {
+	  "name": "files.about-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to about.txt file."
+	},
+    {
+	  "name": "files.payment-providers-properties-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to payment providers properties file."
+	},
+    {
+	  "name": "files.payment-providers-dir-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to payment providers directory."
+	},
+    {
+	  "name": "files.sms-providers-dir-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to SMS providers config parent directory."
+	},
+    {
+	  "name": "files.banktransfer-providers-dir-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to bank transfer providers config parent directory."
+	},
+    {
+	  "name": "files.dotpay-banktransfer-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to DotPay config file."
+	},
+    {
+	  "name": "files.microsms-sms-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to MicroSMS config file."
+	}
+  ]
+}

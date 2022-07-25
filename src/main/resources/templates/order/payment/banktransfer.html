@@ -1,0 +1,6 @@
+<div th:fragment="banktransfer">
+	<div th:if="${order}">
+		<div th:if="${bankTransferConfig instance T(DotPayConfig)" th:replace="fragments/order/banktransfer/dotpay :: dotpay"></div>
+	</div>
+	<h2 th:unless="${order}">Nieznane zamówienie.</h2>
+</div>

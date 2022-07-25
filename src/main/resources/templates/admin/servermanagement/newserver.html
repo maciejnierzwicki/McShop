@@ -1,0 +1,33 @@
+<div th:fragment="newserver">
+	<div th:replace="fragments/content-header :: content-header (text='Nowy serwer')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="col-8 col-lg-4 text-center">
+			<form method="POST" th:action="@{/admin/servermanagement/newserver}" th:object="${serverConfig}" class="border border-dark mt-3">
+				<h4 class="bg-primary text-white border-bottom border-dark">Nowy serwer</h4>
+				<div th:if="${#fields.hasAnyErrors()}"> Popraw wskazane poniżej błędy i spróbuj ponownie.</div>
+				<div class="form-group">
+					<label for="name" class="fw-bold">Nazwa serwera</label>
+					<input type="text" class="form-control text-center w-75 mx-auto" name="name" id="name" th:field="*{name}" required />
+				</div>
+				<div class="form-group">
+					<label for="address" class="fw-bold">Adres serwera</label>
+					<input type="text" class="form-control text-center w-75 mx-auto" name="address" id="address" th:field="*{address}" required />
+				</div>
+				<div class="form-group">
+					<label for="rconPort" class="fw-bold">Port RCON</label>
+					<input type="number" min="0" class="form-control text-center w-75 mx-auto" name="rconPort" id="rconPort" th:field="*{rconPort}" required />
+				</div>
+				<div class="form-group">
+					<label for="rconPassword" class="fw-bold">Hasło RCON</label>
+					<input type="password" class="form-control text-center w-75 mx-auto" name="rconPassword" id="rconPassword" th:field="*{rconPassword}" required />
+				</div>
+				<button type="submit" class="btn btn-primary w-50 rounded-0 mt-2 mb-1 border border-1 border-dark text-white">Zapisz</button>
+			</form>
+			<div class="mt-3">
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin/servermanagement})"></a>
+			</div>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+	</div>
+</div>

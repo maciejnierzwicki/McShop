@@ -1,0 +1,6 @@
+<div th:fragment="orders">
+	<div th:replace="fragments/content-header :: content-header (text='Moje zamówienia')"></div>
+	<h2 class="text-center"><u>Moje zamówienia</u></h2>
+	<div th:replace="fragments/ordersTable :: ordersTable (viewType='USER')"> </div>
+	<div class="mt-3 text-center"><a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/account})"></a></div>
+</div>

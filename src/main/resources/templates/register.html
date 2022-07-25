@@ -1,0 +1,37 @@
+<div th:fragment="register">
+	<div th:replace="fragments/content-header :: content-header (text='Rejestracja')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="col-8 col-lg-4 text-center">
+			<div sec:authorize="!isAuthenticated()">
+				<form method="POST" th:action="@{/register}" th:object="${registration}" id="registerForm" class="border border-dark mt-3 mb-3">
+					<h4 class="bg-primary text-white border-bottom border-dark">Rejestracja</h4>
+					<div class="form-group">
+						<label for="username" class="fw-bold">Nazwa użytkownika</label>
+						<input type="text" maxlength="16" class="form-control text-center w-75 mx-auto" name="username" th:field="*{username}" required />
+					</div>
+					<div class="form-group">
+						<label for="username" class="fw-bold">Hasło</label>
+						<input type="password" class="form-control text-center w-75 mx-auto" name="password" th:field="*{password}" required />
+					</div>
+					<div class="form-group">
+						<label for="username" class="fw-bold">Powtórz hasło</label>
+						<input type="password" class="form-control text-center w-75 mx-auto" name="confirmpassword" th:field="*{confirmpassword}" required />
+					</div>
+					<div class="mt-3">
+						<button type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white">Stwórz konto</button>
+					</div>
+					<div th:if="${#fields.hasAnyErrors()}"> Popraw wskazane poniżej błędy i spróbuj ponownie.</div>
+					<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Błąd nazwy użytkownika.</div>
+					<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Błąd hasła.</div>
+					<div th:if="${#fields.hasErrors('confirmpassword')}" th:errors="*{confirmpassword}">Błąd powtórzenia hasła.</div>
+					<div th:if="${userexists}">Użytkownik o podanej nazwie już istnieje.</div>
+				</form>
+			</div>	
+			<div sec:authorize="isAuthenticated()">
+				<span class="centered">Jesteś już zalogowany.</span>
+			</div>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+	</div>
+</div>

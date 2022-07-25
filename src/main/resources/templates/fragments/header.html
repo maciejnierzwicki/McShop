@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+		<title th:fragment="title" th:text="${properties.siteTitle}">Tytuł strony</title>
+	</head>
+	<body>
+		<div th:fragment="header" class="container border border-dark bg-light text-center">
+				<div th:replace="fragments/content-header :: content-header (text='<br>')"></div>
+			<a th:href="@{/}"><span class="text-center h1"  th:text="${properties.siteTitle}">Tytuł strony</span></a>
+		</div>
+	</body>
+
+</html>

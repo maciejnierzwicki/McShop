@@ -1,0 +1,22 @@
+<div th:fragment="mainpage">
+	<div th:replace="fragments/content-header :: content-header (text='Konfiguracja strony głównej')"></div>
+	<div class="row">
+		<div class="col-1 col-lg-2"></div>
+		<div class="col-12 col-lg-8 text-center">
+			<form method="POST" th:action="@{/admin/mainpageconfiguration}" th:object="${mainPageContent}" class="mt-3 border border-dark">
+			<h4 class="bg-primary text-white border-bottom border-dark">Konfiguracja strony głównej</h4>
+				<div class="form-group">
+					<label for="content">Treść strony (HTML)</label>
+					<div><small class="text-muted">Umieść w treści strony tekst <b>[SERWERY]</b>, aby wyświetlić w jego miejscu listę serwerów.</small></div>
+					<textarea rows="6" class="form-control" name="content" id="content" th:field="*{content}" style="overflow-x: scroll !important; white-space: nowrap;"></textarea>
+				</div>
+				<div class="mt-3">
+					<button class="btn btn-primary w-25 rounded-0 mt-2 mb-1 border border-1 border-dark text-white" type="submit">Zapisz</button>
+				</div>
+			</form>
+			<div>
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin})"></a>
+			</div>
+		</div>
+		<div class="col-1 col-lg-2"></div>
+</div>

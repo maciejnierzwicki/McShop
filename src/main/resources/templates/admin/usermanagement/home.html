@@ -1,0 +1,24 @@
+<div th:fragment="home">
+	<div th:replace="fragments/content-header :: content-header (text='Zarządzanie użytkownikami')"></div>
+	<div class="row">
+		<div class="col"></div>
+		<div class="btn-group-vertical mt-2 mb-1 col">
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/usermanagement/newuser}">Dodaj nowego użytkownika</a>
+			<table th:if="${users}" class="table mt-2 table-bordered border-dark bg-white">
+				<thead>
+					<tr class="bg-primary text-white align-middle text-center">
+						<th class="text-center">Nazwa użytkownika</th>
+						<th colspan="2" class="text-center">Akcje</th>
+					</tr>
+				</thead>
+				<tr th:each="user : ${users}" class="align-middle text-center">
+					<td th:text="${user.username}">Nazwa użytkownika</td>
+					<td th:colspan="${#authentication.getPrincipal().getId() != user.id ? '1' : '2'}"><a th:href="@{/admin/usermanagement/edituser?userid={id}(id=${user.id})}" class="btn btn-sm btn-primary text-white border border-dark rounded-0" th:classappend="${#authentication.getPrincipal().getId() == user.id} ? 'w-75'">Edytuj</a></td>
+					<td th:if="${#authentication.getPrincipal().getId() != user.id}"><a th:href="@{/admin/usermanagement/deleteuser?userid={id}(id=${user.id})}" class="btn btn-sm btn-primary text-white border border-dark rounded-0">Usuń</a></td>
+				</tr>
+			</table>
+			<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin})"></a>
+		</div>
+		<div class="col"></div>
+	</div>
+</div>
