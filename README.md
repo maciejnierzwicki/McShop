@@ -1,2 +1,2 @@
 # McShop
-Minecraft server shop made in Java.
+Minecraft server shop web app made in Java.
