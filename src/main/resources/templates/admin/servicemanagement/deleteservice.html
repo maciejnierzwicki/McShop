@@ -1,0 +1,20 @@
+<div th:fragment="deleteservice">
+	<div th:replace="fragments/content-header :: content-header (text='Usuwanie usługi')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="col-8 col-lg-4 text-center">
+			<div th:if="${service}" class="text-center">
+				<form method="POST" th:object="${service}" th:action="@{/admin/servicemanagement/deleteservice?serviceid={id}(id=${service.id})}" class="border border-dark mt-3">
+					<h4 class="bg-primary text-white border-bottom border-dark">Usuwanie usługi</h4>
+					<div>Zamierzasz usunąć usługę <div class="fw-bold fs-5" th:text="${service.name}"></div>Tej operacji nie można cofnąć.</div>
+					<button class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white" type="submit">Usuń usługę</button>
+				</form>
+			</div>
+			<div th:unless="${service}" class="text-center">
+				Nie znaleziono usługi.
+			</div>
+			<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin/servicemanagement})"></a>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+	</div>
+</div>

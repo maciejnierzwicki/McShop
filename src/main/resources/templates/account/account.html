@@ -1,0 +1,14 @@
+<div th:fragment="account">
+	<div th:replace="fragments/content-header :: content-header (text='Moje konto')"></div>
+	<h2 class="text-center">Użytkownik: <u th:text="${user.username}">*nazwa*</u></h2>
+	<div class="text-center">Dostępne środki: <span th:text="${#numbers.formatDecimal(__${user.money}__,1,2,'COMMA')}" class="fw-bold">*pieniądze</span> <span class="fw-bold">PLN</span></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="btn-group-vertical mt-2 mb-1 col-8 col-lg-4">
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/account/addfunds}">Doładuj portfel</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/account/changepassword}">Zmień hasło</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/account/orders}">Moje zamówienia</a>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+	</div>
+</div>

@@ -1,0 +1,13 @@
+<div th:fragment="home">
+	<div th:replace="fragments/content-header :: content-header (text='Konfiguracja płatności')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="btn-group-vertical mt-2 mb-1 col-8 col-lg-4">
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/paymentconfiguration/providers}">Wybór dostawców płatności</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/paymentconfiguration/banktransfer}">Konfiguracja przelewów</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/paymentconfiguration/sms}">Konfiguracja sms</a>
+			<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin})"></a>
+		</div>
+		<div class="col-8 col-lg-4"></div>
+	</div>
+</div>

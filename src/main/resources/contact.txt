@@ -1,0 +1,4 @@
+<h1 class="text-center">Kontakt</h1>
+<div class="text-center mt-3">
+	<h4>E-Mail: <b>sklep@serwerminecraft.pl</b></h4>
+</div>

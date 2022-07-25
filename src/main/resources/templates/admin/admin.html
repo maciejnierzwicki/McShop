@@ -1,0 +1,19 @@
+<div th:fragment="admin">
+	<div th:replace="fragments/content-header :: content-header (text='Panel admina')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="btn-group-vertical mt-2 mb-1 col-8 col-lg-4">
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/general}">Konfiguracja ogólna</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/mainpageconfiguration}">Konfiguracja strony głównej</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/subpagesconfiguration}">Konfiguracja podstron</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/servicemanagement}">Zarządzanie usługami</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/categorymanagement}">Zarządzanie kategoriami</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/usermanagement}">Zarządzanie użytkownikami</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/servermanagement}">Zarządzanie serwerami</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/ordermanagement}">Zarządzanie zamówieniami</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/paymentconfiguration}">Konfiguracja płatności</a>
+			<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/admin/eventlog}">Dziennik zdarzeń</a>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+	</div>
+</div>

@@ -1,0 +1,7 @@
+<div th:fragment="orderDetailsAdmin">
+	<div th:replace="fragments/content-header :: content-header (text='Szczegóły zamówienia')"></div>
+	<div th:replace="fragments/orderDetailsTable :: orderDetailsTable"> </div>
+	<div class="text-center">
+		<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin/ordermanagement})"></a>
+	</div>
+</div>

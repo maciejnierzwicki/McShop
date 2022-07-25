@@ -1,0 +1,8 @@
+<h1 class="text-center">Regulamin</h1>
+<div class="text-center mt-3">
+	<ol class="list-group list-group-numbered">
+		<li class="list-group-item">Admin ma zawsze rację.</li>
+		<li class="list-group-item">Jeśli admin nie ma racji, patrz punkt wyżej.</li>
+		<li class="list-group-item">Regulamin może ulegać zmianom.</li>
+	</ol>
+</div>

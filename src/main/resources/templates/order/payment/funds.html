@@ -1,0 +1,13 @@
+<div th:fragment="funds">
+	<div class="text-center mt-3 mb-3 border border-dark">
+		<h4 class="bg-primary text-white border-bottom border-dark">Płatność środkami na koncie</h4>
+		<div th:if="${order}">
+			Zapłać, wykorzystując środki na Twoim koncie.
+			<div>Z Twojego konta zostanie pobrane <span th:text="${#numbers.formatDecimal(order.finalPrice,1,2,'COMMA')}" class="fw-bold"></span> zł.</div>
+			<form method="POST" th:action="@{/order/payment/funds}">
+				<input type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white" value="Zapłać">
+			</form>
+		</div>
+		<div th:unless="${order}">Nieznane zamówienie.</div>
+	</div>
+</div>

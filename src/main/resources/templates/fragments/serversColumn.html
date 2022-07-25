@@ -1,0 +1,6 @@
+<div th:fragment="serversColumn">
+	<div th:if="${servers == null OR servers.isEmpty()}" class="text-center">Brak serwerów do wyświetlenia.</div>
+	<div th:if="${servers}" class="btn-group-vertical mt-2 mb-1" style="width:100%" > 
+		<a th:each="server : ${servers}" class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/server/{id}(id=${server.id})}" th:text="${server.name}"></a>
+	</div>
+</div>

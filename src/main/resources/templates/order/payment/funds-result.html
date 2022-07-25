@@ -1,0 +1,17 @@
+<div th:fragment="funds-result">
+	<div th:replace="fragments/content-header :: content-header (text='Realizacja zamówienia')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="col-8 col-lg-4 text-center">
+			<div th:if="${order}">
+				<div th:if="${success}">Pomyślnie opłacono zamówienie.</div>
+				<div th:if="${notEnoughFunds}">Brak wystarczających środków na koncie.</div>
+			</div>
+			<div th:unless="${order}" class="text-center">Nieznane zamówienie.</div>
+			<div class="mt-3 mb-3">
+				<a class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/}">Powrót do sklepu</a>
+			</div>
+			
+		</div>
+		<div class="col-2 col-lg-4"></div>
+</div>

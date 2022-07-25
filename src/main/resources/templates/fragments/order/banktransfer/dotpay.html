@@ -1,0 +1,18 @@
+<div th:fragment="dotpay">
+	<form method="POST" action="https://ssl.dotpay.pl/t2/" class="mt-3 mb-3 border border-dark">
+		<h4 class="bg-primary text-white border-bottom border-dark">Zapłać przez DotPay</h4>
+		<div class="mt-3">
+			<img th:src="@{/images/dotpay_logo_white_250x88.jpg}" class="col-9 mx-auto border border-dark">
+		</div>
+		<input type="hidden" name="id" th:value="${bankTransferConfig.shopId}" />
+		<input type="hidden" name="control" th:value="${order.id}" />
+		<input type="hidden" name="description" th:value="${order.service.name}" />
+		<input type="hidden" name="type" value="0"/>
+		<input type="hidden" name="url" th:value="${properties.siteUrl + '/order/finish'}" />
+		<input type="hidden" name="amount" th:value="${order.service.priceBankTransfer}" />
+		<div class="text-center">
+			Kwota do zapłaty: <span th:text="${#numbers.formatDecimal(order?.finalPrice,1,2,'COMMA')}" class="fw-bold">KWOTA</span> zł<br>
+			<input type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white text-center" value="Zapłać">
+		</div>
+	</form>
+</div>

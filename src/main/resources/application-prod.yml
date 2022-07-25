@@ -1,0 +1,26 @@
+spring:
+  thymeleaf:
+    cache: true
+  jpa:
+    hibernate:
+      use-new-id-generator-mappings: false
+  sql:
+    init:
+      schema-locations:
+      - classpath:schema.sql
+      mode: always
+files:
+  main-properties-file-path: main.properties
+  database-file-path: database.properties
+  subpages-properties-file-path: subpages.properties
+  setup-file-path: file:setup.progress
+  templates-dir-path: file:./templates/
+  rules-file-path: rules.txt
+  contact-file-path: contact.txt
+  about-file-path: about.txt
+  payment-providers-properties-file-path: paymentconfig/providers.properties
+  payment-providers-dir-path: paymentconfig
+  sms-providers-dir-path: paymentconfig/sms/
+  banktransfer-providers-dir-path: paymentconfig/banktransfer/
+  dotpay-banktransfer-file-path: paymentconfig/banktransfer/DotPay.properties
+  microsms-sms-file-path: paymentconfig/sms/MicroSMS.properties

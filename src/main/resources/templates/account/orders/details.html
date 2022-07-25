@@ -1,0 +1,17 @@
+<div th:fragment="orderDetailsUser">
+	<div th:replace="fragments/content-header :: content-header (text='Szczegóły zamówienia')"></div>
+	<h2 class="text-center"><u>Szczegóły zamówienia</u></h2>
+	<div th:replace="fragments/orderDetailsTable :: orderDetailsTable"> </div>
+	<th:block th:if="${order.status.name == 'WAITING_PAYMENT'}">
+		<form th:if="${order.orderType.name == 'SERVICE_ORDER'}" th:action="@{/order}" th:object="${order}" method="POST" class="text-center">
+			<input type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white" value="Ponów płatność">
+		</form>
+		<form th:if="${order.orderType.name == 'FUNDS_ORDER' AND order.paymentMethod.name == 'BANK_TRANSFER'}" th:action="@{/account/addfunds/banktransfer/retry}" th:object="${order}" method="POST" class="text-center">
+			<input type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white" value="Ponów płatność">
+		</form>
+		<form th:if="${order.orderType.name == 'FUNDS_ORDER' AND order.paymentMethod.name == 'SMS'}" th:action="@{/account/addfunds/sms/retry}" th:object="${order}" method="POST" class="text-center">
+			<input type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white" value="Ponów płatność">
+		</form>
+	</th:block>
+	<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/account/orders})"></a>
+</div>

@@ -1,0 +1,125 @@
+CREATE TABLE IF NOT EXISTS Categories (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	name TEXT NOT NULL,
+	position INT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS Servers (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  name TEXT NOT NULL,
+  address TEXT NOT NULL,
+  rcon_port INT NOT NULL,
+  rcon_password TEXT NOT NULL,
+  position INT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE IF NOT EXISTS SmsCodes (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	price_net FLOAT NOT NULL DEFAULT 0,
+	phone_number INT NOT NULL,
+	text TEXT NOT NULL,
+	funds_to_add FLOAT NOT NULL DEFAULT 0,
+	provider TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Services (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	name TEXT NOT NULL,
+	description TEXT,
+	price DOUBLE DEFAULT 0,
+	price_bank_transfer DOUBLE DEFAULT 0,
+	sms_id BIGINT,
+	category_id BIGINT,
+	server_id BIGINT,
+	commands TEXT,
+	position INT NOT NULL DEFAULT 1,
+	enabled BOOLEAN NOT NULL DEFAULT 1,
+	FOREIGN KEY (category_id) REFERENCES Categories(id),
+	FOREIGN KEY (server_id) REFERENCES Servers(id),
+	FOREIGN KEY (sms_id) REFERENCES SmsCodes(id)
+);
+
+CREATE TABLE IF NOT EXISTS Users (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	username TEXT NOT NULL,
+	password TEXT NOT NULL,
+	money DOUBLE NOT NULL DEFAULT 0
+);
+
+CREATE TABLE IF NOT EXISTS Roles (
+	id VARCHAR(45) PRIMARY KEY NOT NULL,
+	displayname TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Users_roles (
+  user_id BIGINT NOT NULL,
+  role_id VARCHAR(45) NOT NULL,
+  FOREIGN KEY (role_id) REFERENCES Roles(id),
+  FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE IF NOT EXISTS Orders (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	service_id BIGINT DEFAULT -1,
+	order_type TEXT NOT NULL,
+	amount FLOAT,
+	player_name VARCHAR(16) DEFAULT '',
+	user_id BIGINT,
+	creation_date DATETIME NOT NULL,
+	status TEXT NOT NULL,
+	paymentMethod TEXT NOT NULL,
+	finalPrice FLOAT DEFAULT 0.0 NOT NULL,
+	FOREIGN KEY (service_id) REFERENCES Services(id),
+	FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE IF NOT EXISTS EventMeta (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	actor_id BIGINT NULL,
+	user_id BIGINT NULL,
+	service_id BIGINT NULL,
+	category_id BIGINT NULL,
+	server_id BIGINT NULL,
+	order_id BIGINT NULL,
+	FOREIGN KEY (actor_id) REFERENCES Users(id),
+	FOREIGN KEY (user_id) REFERENCES Users(id),
+	FOREIGN KEY (service_id) REFERENCES Services(id),
+	FOREIGN KEY (category_id) REFERENCES Categories(id),
+	FOREIGN KEY (server_id) REFERENCES Servers(id),
+	FOREIGN KEY (order_id) REFERENCES Orders(id)
+);
+
+CREATE TABLE IF NOT EXISTS Events (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	creation_date DATETIME NOT NULL,
+	event_type TEXT NOT NULL,
+	meta_id BIGINT DEFAULT -1,
+	FOREIGN KEY (meta_id) REFERENCES EventMeta(id)
+);
+
+
+/*
+CREATE TABLE IF NOT EXISTS ServiceOrders (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	service_id BIGINT NOT NULL,
+	player_name VARCHAR(16) NOT NULL,
+	user_id BIGINT,
+	creation_date DATETIME NOT NULL,
+	status TEXT NOT NULL,
+	paymentMethod TEXT NOT NULL,
+	finalPrice FLOAT DEFAULT 0.0 NOT NULL,
+	FOREIGN KEY (service_id) REFERENCES Services(id),
+	FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE IF NOT EXISTS FundsOrders (
+	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+	user_id BIGINT,
+	creation_date DATETIME NOT NULL,
+	amount FLOAT,
+	status TEXT NOT NULL,
+	paymentMethod TEXT NOT NULL,
+	finalPrice FLOAT DEFAULT 0.0 NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+*/

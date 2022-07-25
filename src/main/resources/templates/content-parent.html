@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html th:replace="fragments/common :: common"></html>
+<html>
+	<body th:style="'background:url(' + @{/images/background.jpg} + ') no-repeat fixed;'">
+		<div class="container">
+			<div class="row mt-5">
+					<div th:if="${properties.serversColumn}" class="col-12 col-md-2 float-start bg-light border border-dark">
+						<div th:replace="fragments/content-header :: content-header (text='Serwery')"></div>
+						<div th:replace="fragments/serversColumn :: serversColumn"></div>
+					</div>
+					<div th:classappend="${properties.serversColumn} ? 'col-12 col-md-10 float-end' : 'col-12'">
+						<div class="row border border-dark">
+							<div class="bg-light">
+								<div th:replace="${VIEW_FILE} :: ${VIEW_NAME}"></div>
+							</div> 
+						</div>
+					</div>
+			</div>
+			
+		</div>
+		<div class="container">
+			<div class="mt-5">
+				<div th:replace="fragments/footer :: footer"></div>
+			</div>
+		</div>
+	</body>
+</html>

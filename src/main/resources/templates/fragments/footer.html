@@ -1,0 +1,14 @@
+<div th:fragment="footer" class="row border border-dark bg-light">
+	<div th:replace="fragments/content-header :: content-header (text=${properties.siteTitle})"></div>
+	<div class="col"></div>
+	<div class="col-12 text-center">
+		<a th:if="${subpagesProperties.rulesPageEnabled}" class="link-primary" th:href="@{/rules}">Regulamin</a>
+		<a th:if="${subpagesProperties.contactPageEnabled}" class="link-primary" th:href="@{/contact}">Kontakt</a>
+		<a th:if="${subpagesProperties.aboutPageEnabled}" class="link-primary" th:href="@{/about}">O nas</a>
+		<div class="row mt-2">
+			<div class="col-12">
+				<small>Projekt: <b>Maciej Nierzwicki</b></small>
+			</div>
+		</div>
+	</div>
+</div>

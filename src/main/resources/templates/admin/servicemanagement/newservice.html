@@ -1,0 +1,71 @@
+<div th:fragment="newservice">
+	<div th:replace="fragments/content-header :: content-header (text='Nowa usługa')"></div>
+	<div class="row">
+		<div class="col-1 col-lg-3"></div>
+		<div class="col-12 col-lg-6 text-center">
+			<form method="POST" th:action="@{/admin/servicemanagement/newservice}" th:object="${newService}" class="mt-3 border border-dark">
+				<h4 class="bg-primary text-white border-bottom border-dark">Nowa usługa</h4>
+				<div th:if="${#fields.hasAnyErrors()}"> Popraw wskazane poniżej błędy i spróbuj ponownie.</div>
+				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Błąd nazwy przedmiotu.</div>
+				<div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Błąd ceny.</div>
+				<div th:if="${categorynotexist}">Nie znaleziono wybranej kategorii dla usługi.</div>
+				<div class="form-group">
+					<label for="name" class="fw-bold">Nazwa usługi</label>
+					<input type="text" maxlength="32" class="form-control text-center mt-1 mb-1 w-75 mx-auto" name="name" id="name" th:field="*{name}" required />
+				</div>
+				<div class="form-group">
+					<label for="price" class="fw-bold">Cena (środki na koncie)</label>
+					<input type="number" min="0.00" step="0.01" class="form-control text-center mt-1 mb-1 w-75 mx-auto" name="price" th:field="*{price}" required />
+					<small id="priceHelp" class="form-text text-muted">Wprowadź 0, aby wyłączyć płatność środkami na koncie.</small>
+				</div>
+				<div class="form-group">
+					<label for="priceBankTransfer" class="fw-bold">Cena (przelew)</label>
+					<input type="number" min="0.00" step="0.01" class="form-control text-center mt-1 mb-1 w-75 mx-auto" name="priceBankTransfer" th:field="*{priceBankTransfer}" required />
+					<small id="priceBankTransferHelp" class="form-text text-muted">Wprowadź 0, aby wyłączyć płatność przelewem.</small>
+				</div>
+				<div class="form-group">
+					<label for="smsCode" class="fw-bold">Cena (sms)</label>
+					<select class="form-control text-center mt-1 mb-1 w-75 mx-auto" name="smsCode" id="smsCode" th:field="*{smsCode}" required>
+						<option value="-1" selected>(bez płatności sms)</option>
+						<option th:each="code : ${smsCodes}" th:value="${code.id}" th:text="__${code.priceNet}__ + ' zł netto (' + __${code.message}__ + ' pod numer ' + __${code.phoneNumber}__ + ')'">Kod sms</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="category" class="fw-bold">Kategoria</label>
+					<select class="form-control text-center mt-1 mb-1 w-75 mx-auto" name="category" id="category" th:field="*{category}" required>
+						<option value="-1" selected>(bez kategorii)</option>
+						<option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}">Kategoria</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="server" class="fw-bold">Serwer</label>
+					<select class="form-control text-center mt-1 mb-1 w-75 mx-auto" name="server" id="server" th:field="*{server}" required>
+						<option value="-1" th:selected="${newService.server == null} OR ${newService.server == -1}">(bez serwera)</option>
+						<option th:each="server : ${servers}" th:value="${server.id}" th:text="${server.name}" th:selected="${server.id} == ${newService.server}">Serwer</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="commands" class="fw-bold">Komendy</label>
+					<textarea rows="4" cols="256" style="overflow-x: scroll !important; white-space: nowrap;" class="form-control mt-1 mb-1 w-75 mx-auto" name="commands" id="commands" th:field="*{commands}" placeholder="Lista komend"></textarea>
+				</div>
+				<div class="form-group">
+					<label for="description" class="fw-bold">Opis usługi (HTML)</label>
+					<textarea rows="4" cols="256" style="overflow-x: scroll !important; white-space: nowrap;" class="form-control mt-1 mb-1 w-75 mx-auto" name="description" id="description" th:field="*{description}"></textarea>
+				</div>
+				<div class="form-check">
+					<label for="enabled" class="form-check-label fw-bold">
+						<input type="checkbox" class="form-check-input" name="enabled" id="enabled" th:field="*{enabled}" checked="checked"/>
+						Usługa aktywna
+					</label>
+				</div>
+				<div class="mt-3">
+					<button type="submit" class="btn btn-lg w-50 btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white">Stwórz usługę</button>
+				</div>
+			</form>
+			<div class="mt-3">
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin/servicemanagement})"></a>
+			</div>
+		</div>
+		<div class="col-1 col-lg-3"></div>
+	</div>
+</div>

@@ -1,0 +1,42 @@
+server:
+  port: 8080
+spring:
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: false
+  thymeleaf:
+    cache: false
+  jpa:
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+  sql:
+    init:
+      schema-locations:
+      - classpath:schema.sql
+      mode: always
+logging:
+  file:
+    name: mcshop.log
+  level:
+    '[org.springframework]': info
+    '[pl.maciejnierzwicki.mcshop]': info
+files:
+  main-properties-file-path: classpath:main.properties
+  database-file-path: classpath:database.properties
+  subpages-properties-file-path: classpath:subpages.properties
+  setup-file-path: classpath:setup.progress
+  templates-dir-path: classpath:templates/
+  rules-file-path: rules.txt
+  contact-file-path: contact.txt
+  about-file-path: about.txt
+  payment-providers-properties-file-path: classpath:paymentconfig/providers.properties
+  payment-providers-dir-path: classpath:paymentconfig
+  sms-providers-dir-path: paymentconfig/sms/
+  banktransfer-providers-dir-path: paymentconfig/banktransfer/
+  dotpay-banktransfer-file-path: classpath:paymentconfig/banktransfer/DotPay.properties
+  microsms-sms-file-path: classpath:paymentconfig/sms/MicroSMS.properties
+  

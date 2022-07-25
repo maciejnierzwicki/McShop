@@ -1,0 +1,25 @@
+<div th:fragment="editcategory">
+	<div th:replace="fragments/content-header :: content-header (text='Edytowanie kategorii')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="col-8 col-lg-4 text-center">
+			<th:block th:if="${editCategory}">
+				<form method="POST" th:object="${editCategory}" th:action="@{/admin/categorymanagement/editcategory?categoryid=__${categoryid}__}" class="border border-dark mt-3">
+					<h4 class="text-center bg-primary text-white border-bottom border-dark">Edytowanie kategorii</h4>
+					<div th:if="${#fields.hasAnyErrors()}"> Popraw wskazane poniżej błędy i spróbuj ponownie.</div>
+					<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Błąd nazwy kategorii.</div>
+					<div class="form-group">
+						<label for="name" class="fw-bold">Nazwa kategorii</label>
+						<input type="text" maxlength="32" class="form-control text-center w-75 mx-auto" name="name" id="name" th:field="*{name}" th:value="${editCategory.name}" />
+					</div>
+					<button class="btn btn-primary w-50 rounded-0 mt-2 mb-1 border border-1 border-dark text-white" type="submit">Zapisz</button>
+				</form>
+			</th:block>
+			<th:block th:unless="${editCategory}">
+				Nie znaleziono kategorii.
+			</th:block>
+			<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin/categorymanagement})"></a>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+	</div>
+</div>

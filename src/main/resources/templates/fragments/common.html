@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html th:fragment="common" lang="pl">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title th:replace="fragments/header :: title"> </title>
+		<link th:href="@{/bootstrap-custom/css/bootstrap.css}" rel="stylesheet"/>
+		<link th:href="@{/css/styles.css}" rel="stylesheet"/>
+		<script th:src="@{/js/scripts.js}"></script>
+		<script th:src="@{/js/jquery-3.6.0.min.js}"></script>
+	</head>
+	<body>
+		<div>
+			<div th:replace="fragments/header :: header"> </div>
+			<div th:replace="fragments/navigation :: navigation"> </div>	
+		</div>
+	</body>
+</html>

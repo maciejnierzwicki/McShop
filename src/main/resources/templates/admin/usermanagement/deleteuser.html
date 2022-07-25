@@ -1,0 +1,22 @@
+<div th:fragment="deleteuser">
+	<div th:replace="fragments/content-header :: content-header (text='Usuwanie użytkownika')"></div>
+	<div class="row">
+		<div class="col-2 col-lg-4"></div>
+		<div class="col-8 col-lg-4 text-center">
+			<div th:if="${user}">
+				<form method="POST" th:object="${user}" th:action="@{/admin/usermanagement/deleteuser?userid={id}(id=${user.id})}" class="border border-dark mt-3">
+					<h4 class="bg-primary text-white border-bottom border-dark">Usuwanie użytkownika</h4>
+					<div>Zamierzasz usunąć użytkownika <div class="fw-bold fs-5" th:text="${user.username}"></div>Tej operacji nie można cofnąć.</div>
+					<button class="btn btn-primary w-50 rounded-0 mt-2 mb-1 border border-1 border-dark text-white" type="submit">Usuń użytkownika</button>
+				</form>
+			</div>
+			<div th:unless="${user}">
+				Nie znaleziono użytkownika.
+			</div>
+			<div class="mt-3">
+				<a th:replace="fragments/nav-back-button :: nav-back-button (href=@{/admin/usermanagement})"></a>
+			</div>
+		</div>
+		<div class="col-2 col-lg-4"></div>
+	</div>
+</div>

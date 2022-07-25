@@ -1,0 +1,41 @@
+<div th:fragment="eventsTable" class="table-responsive">
+	<th:block th:if="${events} AND ${!events.isEmpty()}">
+		<table class="table table-sm mt-2 table-bordered border-dark bg-white text-center align-middle">
+			<tr class="text-center bg-primary text-white">
+				<th>Data</th>
+				<th>Typ</th>
+				<th>Użytkownik</th>
+				<th>Więcej</th>
+			</tr>
+			<th:block th:each="event : ${events}">
+				<tr>
+					<td th:text="${#dates.format(event.date, properties.dateFormat)}">Data zdarzenia</td>
+					<td th:text="${event.type.displayName}">Typ zdarzenia</td>
+					<td th:text="${event?.meta?.actor?.username}">Użytkownik</td>
+					<td><a class="btn btn-primary btn-sm rounded-0 border border-dark text-white" th:href="@{/admin/eventlog/details/{id}(id=${event.id})}">Szczegóły</a></td>			
+				</tr>
+			</th:block>
+		</table>
+		<div class="mt-3 text-center form-group">
+			<div class="form-group">
+				<form th:if="${pageForm.page > 1}" method="POST" style="display: inline" th:object="${pageForm}" th:action="@{|${#httpServletRequest.requestURI}|}">
+					<input type="hidden" name="page" th:value="${pageForm.page - 1}"/>
+					<button type="submit" class="btn btn-primary rounded-0 border border-1 border-dark text-white mt-2 mb-1">&lt;&lt; Wstecz</button>
+				</form>
+				<form th:if="${allPages > pageForm.page}" method="POST" style="display: inline" th:object="${pageForm}" th:action="@{|${#httpServletRequest.requestURI}|}">
+					<input type="hidden" name="page" th:value="${pageForm.page + 1}"/>
+					<button type="submit" class="btn btn-primary rounded-0 border border-1 border-dark text-white mt-2 mb-1">Dalej &gt;&gt; </button>
+				</form>
+			</div>
+			<form class="form-group" method="POST" th:object="${pageForm}" th:action="@{|${#httpServletRequest.requestURI}|}">
+				<div class="col-2 mx-auto">
+					<label for="page">Strona</label>
+					<input type="number" id="page" min="1" th:max="${allPages}" th:field="*{page}" th:value="${pageForm.page}" class="form-control text-center"/>
+				</div>
+				<button type="submit" class="btn btn-primary rounded-0 border border-1 border-dark text-white mt-2 mb-1">Skok do strony</button>
+			</form>
+			Wszystkich stron: <b th:text="${allPages}"></b>
+		</div>
+	</th:block>
+	<div th:if="!${events} OR ${events.isEmpty()}" class="text-center">Brak zdarzeń.</div>
+</div>
