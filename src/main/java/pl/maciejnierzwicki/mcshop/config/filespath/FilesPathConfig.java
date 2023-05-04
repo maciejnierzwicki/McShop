@@ -46,6 +46,9 @@ public class FilesPathConfig {
 	@Value("${files.dotpay-banktransfer-file-path}")
 	private String dotPayConfigFilePath;
 	
+	@Value("${files.przelewy24-banktransfer-file-path}")
+	private String przelewy24ConfigFilePath;
+	
 	@Value("${files.microsms-sms-file-path}")
 	private String microSMSConfigFilePath;
 	
@@ -112,6 +115,11 @@ public class FilesPathConfig {
 	@Bean
 	public String dotPayConfigFilePath() {
 		return dotPayConfigFilePath;
+	}
+	
+	@Bean
+	public String przelewy24ConfigFilePath() {
+		return przelewy24ConfigFilePath;
 	}
 	
 	@Bean

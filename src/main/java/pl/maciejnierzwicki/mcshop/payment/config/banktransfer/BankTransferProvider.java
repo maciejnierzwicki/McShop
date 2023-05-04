@@ -5,7 +5,7 @@ package pl.maciejnierzwicki.mcshop.payment.config.banktransfer;
  *
  */
 public enum BankTransferProvider {
-	DOTPAY("DotPay");//, HOTPAY("HotPay");
+	DOTPAY("DotPay"), PRZELEWY24("Przelewy24");//, HOTPAY("HotPay");
 	
 	private String name;
 
