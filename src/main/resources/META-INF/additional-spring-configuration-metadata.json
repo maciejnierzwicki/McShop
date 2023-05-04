@@ -79,6 +79,12 @@
 	    "Path to DotPay config file."
 	},
     {
+	  "name": "files.przelewy24-banktransfer-file-path",
+	  "type": "java.lang.String",
+	  "description":
+	    "Path to Przelewy24 config file."
+	},
+    {
 	  "name": "files.microsms-sms-file-path",
 	  "type": "java.lang.String",
 	  "description":

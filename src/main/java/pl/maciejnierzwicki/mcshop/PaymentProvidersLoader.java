@@ -11,12 +11,14 @@ import org.springframework.context.annotation.Primary;
 import lombok.extern.slf4j.Slf4j;
 import pl.maciejnierzwicki.mcshop.payment.config.banktransfer.BankTransferConfig;
 import pl.maciejnierzwicki.mcshop.payment.config.banktransfer.impl.dotpay.DotPayConfig;
+import pl.maciejnierzwicki.mcshop.payment.config.banktransfer.impl.przelewy24.Przelewy24Config;
 import pl.maciejnierzwicki.mcshop.payment.config.sms.SMSConfig;
 import pl.maciejnierzwicki.mcshop.payment.config.sms.impl.microsms.MicroSMSConfig;
 import pl.maciejnierzwicki.mcshop.payment.validation.BankTransferValidationService;
 import pl.maciejnierzwicki.mcshop.payment.validation.SMSValidationService;
 import pl.maciejnierzwicki.mcshop.payment.validation.impl.dotpay.DotPayPaymentValidationService;
 import pl.maciejnierzwicki.mcshop.payment.validation.impl.microsms.MicroSMSValidationService;
+import pl.maciejnierzwicki.mcshop.payment.validation.impl.przelewy24.Przelewy24PaymentValidationService;
 import pl.maciejnierzwicki.mcshop.properties.PaymentProvidersProperties;
 
 @Configuration
@@ -43,6 +45,9 @@ public class PaymentProvidersLoader implements ApplicationContextAware {
 		switch(providersProperties.getBankTransferProvider()) {
 			case DOTPAY: {
 				return context.getBean(DotPayPaymentValidationService.class);
+			}
+			case PRZELEWY24: {
+				return context.getBean(Przelewy24PaymentValidationService.class);
 			}
 		}
 		return null;
@@ -72,6 +77,10 @@ public class PaymentProvidersLoader implements ApplicationContextAware {
 		switch(providersProperties.getBankTransferProvider()) {
 			case DOTPAY: {
 				config = context.getBean(DotPayConfig.class);
+				break;
+			}
+			case PRZELEWY24: {
+				config = context.getBean(Przelewy24Config.class);
 				break;
 			}
 		}

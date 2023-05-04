@@ -23,4 +23,5 @@ files:
   sms-providers-dir-path: paymentconfig/sms/
   banktransfer-providers-dir-path: paymentconfig/banktransfer/
   dotpay-banktransfer-file-path: paymentconfig/banktransfer/DotPay.properties
+  przelewy24-banktransfer-file-path: paymentconfig/banktransfer/Przelewy24.properties
   microsms-sms-file-path: paymentconfig/sms/MicroSMS.properties
