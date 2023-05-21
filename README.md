@@ -60,3 +60,6 @@ Open command line in project root directory and enter this command: ``mvnw clean
 - [rkon-core](https://github.com/kr5ch/rkon-core)
 
 **Author:** [Maciej Nierzwicki](https://github.com/maciejnierzwicki/)
+
+
+**Screenshots:** [LINK](https://www.maciejnierzwicki.pl/projects/mcshop/)
