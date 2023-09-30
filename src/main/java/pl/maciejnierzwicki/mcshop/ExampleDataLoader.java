@@ -3,13 +3,13 @@ package pl.maciejnierzwicki.mcshop;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import pl.maciejnierzwicki.mcshop.dbentity.Category;
 import pl.maciejnierzwicki.mcshop.dbentity.Role;

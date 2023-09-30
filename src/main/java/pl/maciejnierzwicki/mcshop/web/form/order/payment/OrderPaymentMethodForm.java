@@ -1,6 +1,6 @@
 package pl.maciejnierzwicki.mcshop.web.form.order.payment;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.Data;
 

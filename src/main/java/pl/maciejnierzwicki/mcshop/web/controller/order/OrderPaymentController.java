@@ -2,7 +2,7 @@ package pl.maciejnierzwicki.mcshop.web.controller.order;
 
 import java.util.Date;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,6 +26,7 @@ import pl.maciejnierzwicki.mcshop.event.EventBuilder;
 import pl.maciejnierzwicki.mcshop.event.EventType;
 import pl.maciejnierzwicki.mcshop.event.McShopEventPublisher;
 import pl.maciejnierzwicki.mcshop.orderdata.OrderStatus;
+import pl.maciejnierzwicki.mcshop.orderdata.OrderType;
 import pl.maciejnierzwicki.mcshop.orderdata.PaymentMethod;
 import pl.maciejnierzwicki.mcshop.payment.PaymentValidationResult;
 import pl.maciejnierzwicki.mcshop.payment.config.banktransfer.BankTransferConfig;
@@ -40,7 +41,6 @@ import pl.maciejnierzwicki.mcshop.web.form.order.payment.sms.SMSCodeVerifyForm;
 
 @Controller
 @RequestMapping("/order/payment")
-@SessionAttributes("order")
 @Slf4j
 public class OrderPaymentController {
 	
@@ -48,6 +48,9 @@ public class OrderPaymentController {
 	private OrderService orderService;
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private Order order;
 	
 	@Autowired(required = false)
 	private SMSValidationService smsValidationService;
@@ -81,13 +84,25 @@ public class OrderPaymentController {
 	}
 	
 	@PostMapping
-	public String showOrderPayment(Model model, @SessionAttribute(name = "order") Order order,  @ModelAttribute(name = "paymentMethodForm") @Valid OrderPaymentMethodForm paymentMethodForm, Errors errors) {
-		if(order == null|| !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) { log.debug("order null or service invalid, redirecting to main page"); return "redirect:/"; }
-		if(orderValidator.isValidOrder(order)) {
-			String selected_method = paymentMethodForm.getPaymentMethod() != null ? paymentMethodForm.getPaymentMethod() : order.getPaymentMethod().toString();
+	public String showOrderPayment(Model model, @ModelAttribute(name = "order") Order validated_order,  @ModelAttribute(name = "paymentMethodForm") @Valid OrderPaymentMethodForm paymentMethodForm, Errors errors) {
+		if(order == null || !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) { log.debug("order null or service invalid, redirecting to main page"); return "redirect:/"; }
+		log.debug("validated order null? " + (validated_order == null));
+		if(validated_order != null) {
+			log.debug("validated order service null? " + (validated_order.getService() == null));
+		}
+		validated_order.setOrderType(order.getOrderType());
+		validated_order.setService(order.getService());
+		validated_order.setUser(order.getUser());
+		if(orderValidator.isValidOrder(validated_order)) {
+			String selected_method = paymentMethodForm.getPaymentMethod() != null ? paymentMethodForm.getPaymentMethod() : validated_order.getPaymentMethod().toString();
 			log.debug("Selected payment method: " + (selected_method != null ? selected_method : order.getPaymentMethod().toString()));
-			order.setPaymentMethod(PaymentMethod.valueOf(selected_method));
-			model.addAttribute("order", order);	
+			validated_order.setPaymentMethod(PaymentMethod.valueOf(selected_method));
+			order.setPaymentMethod(validated_order.getPaymentMethod());
+			log.debug("(payment) service: " + (order.getService() != null));
+			order.setService(validated_order.getService());
+			log.debug("(payment-2) service: " + (order.getService() != null));
+			order.setPlayerName(validated_order.getPlayerName());
+			order.setOrderType(OrderType.SERVICE_ORDER);
 			switch(order.getPaymentMethod()) {
 				case BANK_TRANSFER:{
 					if(bankTransferConfig == null || bankTransferValidationService == null || order.getService().getPriceBankTransfer() <= 0) { log.debug("bank transfer payment method was selected but bank transfer provider is not loaded or service doesn't allow this payment method; redirecting to home page"); return "redirect:/"; }
@@ -108,14 +123,24 @@ public class OrderPaymentController {
 					break;
 				}
 			}
+			model.addAttribute("order", order);
+			validated_order.setFinalPrice(order.getFinalPrice());
+			validated_order.setPlayerName(order.getPlayerName());
 			if(order.getCreationDate() == null) {
 				order.setCreationDate(new Date());
-				order = orderService.save(order);
-				eventPublisher.publishEvent(EventBuilder.forType(EventType.ORDER_CREATE_EVENT).withOrder(order).withActor(order.getUser()).toEvent());
+				validated_order.setCreationDate(order.getCreationDate());
+				log.debug("Saving order to database (1)");
+				validated_order = orderService.save(validated_order);
+				eventPublisher.publishEvent(EventBuilder.forType(EventType.ORDER_CREATE_EVENT).withOrder(validated_order).withActor(validated_order.getUser()).toEvent());
 			}
 			else {
-				order = orderService.save(order);
+				log.debug("Saving order to database (2)");
+				order = orderService.save(validated_order);
 			}
+		}
+		
+		else {
+			log.debug("(payment) not valid order");
 		}
 		
 		model.addAttribute("VIEW_FILE", "orderpayment");
@@ -124,8 +149,8 @@ public class OrderPaymentController {
 	}
 	
 	@PostMapping(path = "/sms") 
-	public String processOrderPaymentSMSForm(Model model, @SessionAttribute(name = "order") Order order, @ModelAttribute(name = "smsCodeForm") SMSCodeVerifyForm form, SessionStatus sessionStatus) {
-		if(order == null || smsConfig == null || smsValidationService == null || !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) { log.debug("order null or service invalid, redirecting to main page"); return "redirect:/"; }
+	public String processOrderPaymentSMSForm(Model model, @ModelAttribute(name = "order") Order validated_order, @ModelAttribute(name = "smsCodeForm") SMSCodeVerifyForm form, SessionStatus sessionStatus) {
+		if(validated_order == null || smsConfig == null || smsValidationService == null || !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) { log.debug("order null or service invalid, redirecting to main page"); return "redirect:/"; }
 		log.debug("Got sms code to verify: " + form.getCode());
 		PaymentValidationResult result = smsValidationService.validateSMSCode(form.getCode(), order.getService().getSmsCode().getPhoneNumber(), smsConfig);
 		boolean valid = result.isPaid();
@@ -149,7 +174,7 @@ public class OrderPaymentController {
 	}
 	
 	@PostMapping(path = "/funds") 
-	public String processOrderPaymentFundsForm(@AuthenticationPrincipal User user, Model model, @SessionAttribute(name = "order") Order order, SessionStatus sessionStatus) {
+	public String processOrderPaymentFundsForm(@AuthenticationPrincipal User user, Model model, @ModelAttribute(name = "order") Order validated_order, SessionStatus sessionStatus) {
 		if(order == null || !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) { log.debug("order null or service invalid, redirecting to main page"); return "redirect:/"; }
 		model.addAttribute("order", order);
 		double finalPrice = order.getFinalPrice();

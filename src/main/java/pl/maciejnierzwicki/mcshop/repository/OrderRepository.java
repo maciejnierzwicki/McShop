@@ -2,7 +2,7 @@ package pl.maciejnierzwicki.mcshop.repository;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
@@ -35,11 +35,13 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 	
 	@Modifying
 	@Transactional
-	@Query("UPDATE Orders SET user_id = null WHERE user_id = :user_id")
+	//@Query("UPDATE Orders SET user_id = null WHERE user_id = :user_id")
+	@Query("UPDATE Order o SET o.user = null WHERE o.user = :user_id")
 	void deleteUserData(@Param("user_id") Long user_id);
 	
 	@Modifying
 	@Transactional
-	@Query("UPDATE Orders SET service_id = null WHERE service_id = :service_id")
+	//@Query("UPDATE Orders SET service_id = null WHERE service_id = :service_id")
+	@Query("UPDATE Order o SET o.service = null WHERE o.service = :service_id")
 	void deleteServiceData(@Param("service_id") Long service_id);
 }

@@ -3,11 +3,10 @@ package pl.maciejnierzwicki.mcshop;
 import java.io.IOException;
 import java.util.jar.JarFile;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import pl.maciejnierzwicki.mcshop.config.web.WebConfig;
 import pl.maciejnierzwicki.mcshop.utils.FilesHelper;

@@ -4,7 +4,12 @@
 		<div class="col-2 col-lg-4"></div>
 		<div class="col-8 col-lg-4 text-center">
 			<th:block th:if="${bankTransferForm}">
-				<div th:if="${bankTransferForm instanceof T(DotPayConfigForm)}" th:replace="fragments/paymentconfig/banktransfer/dotpay :: dotpay"></div>
+				<th:block th:if="${bankTransferForm.class.name == 'pl.maciejnierzwicki.mcshop.web.form.admin.paymentconfiguration.banktransfer.impl.dotpay.DotPayConfigForm'}">
+					<div th:replace="fragments/paymentconfig/banktransfer/dotpay :: dotpay"></div>
+				</th:block>
+				<th:block th:if="${bankTransferForm.class.name == 'pl.maciejnierzwicki.mcshop.web.form.admin.paymentconfiguration.banktransfer.impl.przelewy24.Przelewy24ConfigForm'}">
+					<div th:replace="fragments/paymentconfig/banktransfer/przelewy24 :: przelewy24"></div>
+				</th:block>
 			</th:block>
 			<th:block th:unless="${bankTransferForm}">
 				<div class="text-center">Płatności przelewem są wyłączone.</div>

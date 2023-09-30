@@ -1,7 +1,7 @@
 package pl.maciejnierzwicki.mcshop.web.form.admin.servicemanagement;
 
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 
 import lombok.Data;
 

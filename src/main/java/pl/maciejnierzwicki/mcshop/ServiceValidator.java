@@ -22,12 +22,14 @@ public class ServiceValidator {
 	@Autowired(required = false)
 	private SMSValidationService smsValidationService;
 	
-	public boolean hasAnyWorkingPaymentMethod(Service service) {
+	public boolean hasAnyWorkingPaymentMethod(Service service) throws IllegalStateException {
+		if(service == null) { throw new IllegalStateException("Passed null as service"); }
 		return (service.getPrice() > 0) || (service.getPriceBankTransfer() > 0 && bankTransferConfig != null && bankTransferValidationService != null) 
 				|| (service.getSmsCode() != null && smsConfig != null && smsValidationService != null);
 	}
 	
-	public boolean hasAnyWorkingPaymentMethod(Service service, User user) {
+	public boolean hasAnyWorkingPaymentMethod(Service service, User user) throws IllegalStateException {
+		if(service == null) { throw new IllegalStateException("Passed null as service"); }
 		if(user == null) { return hasAnyWorkingPaymentMethod(service); }
 		return (service.getPrice() > 0 && user.getMoney() >= service.getPrice()) || (service.getPriceBankTransfer() > 0 && bankTransferConfig != null && bankTransferValidationService != null) 
 				|| (service.getSmsCode() != null && smsConfig != null && smsValidationService != null);

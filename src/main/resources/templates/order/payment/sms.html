@@ -1,6 +1,8 @@
 <div th:fragment="sms">
 	<div th:if="${order}">
-		<div th:if="${smsConfig instance T(MicroSMSConfig)" th:replace="fragments/order/sms/microsms :: microsms"></div>
+		<th:block th:if="${smsConfig.class.name == 'pl.maciejnierzwicki.mcshop.payment.validation.impl.microsms.MicroSMSConfig'}">
+			<div th:replace="fragments/order/sms/microsms :: microsms"></div>
+		</th:block>
 	</div>
 	<h2 th:unless="${order}">Nieznane zamówienie.</h2>
 </div>

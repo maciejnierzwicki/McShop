@@ -2,8 +2,8 @@ package pl.maciejnierzwicki.mcshop.customformvalidation;
 
 import java.time.format.DateTimeFormatter;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
 public class ValidDateTimeFormatValidator implements ConstraintValidator<ValidDateTimeFormat, Object> {
 

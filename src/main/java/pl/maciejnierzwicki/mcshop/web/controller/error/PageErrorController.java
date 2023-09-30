@@ -1,7 +1,7 @@
 package pl.maciejnierzwicki.mcshop.web.controller.error;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -25,15 +25,18 @@ public class PageErrorController implements ErrorController {
 		    log.debug("http status: " + status.toString());
 	        Integer statusCode = Integer.valueOf(status.toString());
 	        if(statusCode == HttpStatus.FORBIDDEN.value()) {
+	        	log.debug("403 template");
 	        	model.addAttribute("VIEW_FILE", "errors/403");
 	        	model.addAttribute("VIEW_NAME", "403");
 	        }
 	        else if(statusCode == HttpStatus.NOT_FOUND.value()) {
+	        	log.debug("404 template");
 	        	model.addAttribute("VIEW_FILE", "errors/404");
 	        	model.addAttribute("VIEW_NAME", "404");
 	        }
 	    }
 	    else {
+	    	log.debug("errors template");
 	    	model.addAttribute("VIEW_FILE", "errors/error");
 	    	model.addAttribute("VIEW_NAME", "error");
 	    }

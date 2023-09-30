@@ -1,6 +1,6 @@
 package pl.maciejnierzwicki.mcshop.web.form;
 
-import javax.validation.constraints.Min;
+import jakarta.validation.constraints.Min;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package pl.maciejnierzwicki.mcshop.web.controller.admin.servicemanagement;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

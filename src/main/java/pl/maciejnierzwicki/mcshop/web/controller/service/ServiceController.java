@@ -21,7 +21,6 @@ import pl.maciejnierzwicki.mcshop.web.controller.ControllerCommons;
 
 @Controller
 @RequestMapping("/service")
-@SessionAttributes("order")
 @Slf4j
 public class ServiceController {
 	
@@ -29,19 +28,24 @@ public class ServiceController {
 	private ServiceRepository serviceRepo;
 	@Autowired
 	private ServiceValidator serviceValidator;
+	@Autowired
+	private Order order;
 
+	/*
 	public Order order() {
 		log.debug("new plain order object created");
 		return new Order(OrderType.SERVICE_ORDER);
 	}
+	*/
 
 	
 	@GetMapping(path = "/{id}")
 	public String getService(@PathVariable("id") Long id, Model model, SessionStatus status) {
 		Optional<Service> op_service = serviceRepo.findById(id);
 		if(op_service.isPresent()) {
-			Order order = order();
+			log.debug("Service present");
 			Service service = op_service.get();
+			order.setOrderType(OrderType.SERVICE_ORDER);
 			order.setService(service);
 			model.addAttribute("service", service);
 			model.addAttribute("order", order);

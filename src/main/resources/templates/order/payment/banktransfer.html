@@ -1,7 +1,11 @@
 <div th:fragment="banktransfer">
 	<div th:if="${order}">
-		<div th:if="${bankTransferConfig instance T(DotPayConfig)" th:replace="fragments/order/banktransfer/dotpay :: dotpay"></div>
-		<div th:if="${bankTransferConfig instance T(Przelewy24Config)" th:replace="fragments/order/banktransfer/przelewy24 :: przelewy24"></div>
+		<th:block th:if="${bankTransferConfig.class.name == 'pl.maciejnierzwicki.mcshop.payment.config.banktransfer.impl.dotpay.DotPayConfig'}">
+			<div th:replace="fragments/order/banktransfer/dotpay :: dotpay"></div>
+		</th:block>
+		<th:block th:if="${bankTransferConfig.class.name == 'pl.maciejnierzwicki.mcshop.payment.config.banktransfer.impl.przelewy24.Przelewy24Config'}">
+			<div th:replace="fragments/order/banktransfer/przelewy24 :: przelewy24"></div>
+		</th:block>
 	</div>
 	<h2 th:unless="${order}">Nieznane zamówienie.</h2>
 </div>

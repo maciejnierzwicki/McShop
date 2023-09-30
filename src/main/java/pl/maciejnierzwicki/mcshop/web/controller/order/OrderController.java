@@ -1,6 +1,6 @@
 package pl.maciejnierzwicki.mcshop.web.controller.order;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import pl.maciejnierzwicki.mcshop.ServiceValidator;
 import pl.maciejnierzwicki.mcshop.dbentity.Order;
 import pl.maciejnierzwicki.mcshop.dbentity.User;
+import pl.maciejnierzwicki.mcshop.orderdata.OrderType;
 import pl.maciejnierzwicki.mcshop.utils.AuthUtils;
 import pl.maciejnierzwicki.mcshop.utils.ServiceUtils;
 import pl.maciejnierzwicki.mcshop.web.controller.ControllerCommons;
@@ -25,12 +26,14 @@ import pl.maciejnierzwicki.mcshop.web.form.order.payment.sms.SMSCodeVerifyForm;
 
 @Controller
 @RequestMapping("/order")
-@SessionAttributes("order")
 @Slf4j
 public class OrderController {
 	
 	@Autowired
 	private ServiceValidator serviceValidator;
+	
+	@Autowired
+	private Order order;
 
 	@ModelAttribute(name = "smsCodeForm")
 	public SMSCodeVerifyForm smsCodeForm() {
@@ -42,6 +45,7 @@ public class OrderController {
 		return new OrderPaymentMethodForm();
 	}
 	
+	/*
 	@PostMapping
 	public String processOrder(Model model, @ModelAttribute(name = "order") @Valid Order order, Errors errors) {
 		if(errors.hasErrors() || !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) {
@@ -57,6 +61,32 @@ public class OrderController {
 		else {
 			log.debug("is not logged user");
 		}
+		model.addAttribute("paymentMethods", ServiceUtils.getAvailablePaymentMethods(order.getService(), user));
+		model.addAttribute("paymentMethodForm", paymentMethodForm());
+		model.addAttribute("VIEW_FILE", "order");
+		model.addAttribute("VIEW_NAME", "order");
+		return ControllerCommons.ROOT_VIEW_FILE_NAME;
+	}
+	*/
+	//TODO: DOKOŃCZYĆ
+	@PostMapping
+	public String processOrder(Model model, @ModelAttribute(name = "order") @Valid Order validated_order, Errors errors) {
+		if(errors.hasErrors() || !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) {
+			log.debug("Invalid order or service, redirecting");
+			return "redirect:/";
+		}
+		order.setPlayerName(validated_order.getPlayerName());
+		log.debug("playerName = " + order.getPlayerName());
+		User user = AuthUtils.getAuthenticatedUser();
+		if(user != null) {
+			log.debug("applying user info");
+			order.setUser(user);	
+		}
+		else {
+			log.debug("is not logged user");
+		}
+		order.setOrderType(OrderType.SERVICE_ORDER);
+		model.addAttribute("order", order);
 		model.addAttribute("paymentMethods", ServiceUtils.getAvailablePaymentMethods(order.getService(), user));
 		model.addAttribute("paymentMethodForm", paymentMethodForm());
 		model.addAttribute("VIEW_FILE", "order");

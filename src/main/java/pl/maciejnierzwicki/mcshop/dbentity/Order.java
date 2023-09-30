@@ -2,22 +2,23 @@ package pl.maciejnierzwicki.mcshop.dbentity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 import lombok.Data;
 import pl.maciejnierzwicki.mcshop.orderdata.OrderStatus;
 import pl.maciejnierzwicki.mcshop.orderdata.OrderType;
 import pl.maciejnierzwicki.mcshop.orderdata.PaymentMethod;
 
+@Entity
 @Data
-@Entity(name = "Orders")
+//@Entity(name = "Orders")
 @Table(name = "Orders")
 public class Order {
 	
@@ -27,7 +28,7 @@ public class Order {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
 	

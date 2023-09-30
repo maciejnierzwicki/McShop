@@ -1,6 +1,6 @@
 package pl.maciejnierzwicki.mcshop.payment.validation;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
