@@ -7,7 +7,7 @@
 				<u><h2 th:text="${server.name}">Nazwa serwera</h2></u>
 			</span>
 			<span th:unless="${server}">Nieznany serwer.</span>
-			<span th:unless="${categories}">Brak usług na danym serwerze.</span>
+			<span th:unless="${categories}">Brak usług na wybranym serwerze.</span>
 			<div class="btn-group-vertical mt-2 mb-1 col-12 col-lg-6" th:if="${categories}">
 				<a th:each="category : ${categories}" class="btn btn-primary rounded-0 border border-dark text-white" th:href="@{/category/{id}/server={serverid}(id=${category.id},serverid=${server.id})}" th:text="${category.name}">Nazwa kategorii</a>
 			</div>

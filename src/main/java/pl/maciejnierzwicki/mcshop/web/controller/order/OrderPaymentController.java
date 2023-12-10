@@ -30,6 +30,7 @@ import pl.maciejnierzwicki.mcshop.orderdata.OrderType;
 import pl.maciejnierzwicki.mcshop.orderdata.PaymentMethod;
 import pl.maciejnierzwicki.mcshop.payment.PaymentValidationResult;
 import pl.maciejnierzwicki.mcshop.payment.config.banktransfer.BankTransferConfig;
+import pl.maciejnierzwicki.mcshop.payment.config.banktransfer.impl.przelewy24.Przelewy24Config;
 import pl.maciejnierzwicki.mcshop.payment.config.sms.SMSConfig;
 import pl.maciejnierzwicki.mcshop.payment.validation.BankTransferValidationService;
 import pl.maciejnierzwicki.mcshop.payment.validation.SMSValidationService;
@@ -86,10 +87,7 @@ public class OrderPaymentController {
 	@PostMapping
 	public String showOrderPayment(Model model, @ModelAttribute(name = "order") Order validated_order,  @ModelAttribute(name = "paymentMethodForm") @Valid OrderPaymentMethodForm paymentMethodForm, Errors errors) {
 		if(order == null || !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) { log.debug("order null or service invalid, redirecting to main page"); return "redirect:/"; }
-		log.debug("validated order null? " + (validated_order == null));
-		if(validated_order != null) {
-			log.debug("validated order service null? " + (validated_order.getService() == null));
-		}
+		validated_order.setPlayerName(order.getPlayerName());
 		validated_order.setOrderType(order.getOrderType());
 		validated_order.setService(order.getService());
 		validated_order.setUser(order.getUser());
@@ -100,14 +98,13 @@ public class OrderPaymentController {
 			order.setPaymentMethod(validated_order.getPaymentMethod());
 			log.debug("(payment) service: " + (order.getService() != null));
 			order.setService(validated_order.getService());
-			log.debug("(payment-2) service: " + (order.getService() != null));
-			order.setPlayerName(validated_order.getPlayerName());
 			order.setOrderType(OrderType.SERVICE_ORDER);
 			switch(order.getPaymentMethod()) {
 				case BANK_TRANSFER:{
 					if(bankTransferConfig == null || bankTransferValidationService == null || order.getService().getPriceBankTransfer() <= 0) { log.debug("bank transfer payment method was selected but bank transfer provider is not loaded or service doesn't allow this payment method; redirecting to home page"); return "redirect:/"; }
 					model.addAttribute("bankTransferConfig", bankTransferConfig);
 					order.setFinalPrice(order.getService().getPriceBankTransfer());
+					
 					break;
 				}
 				case SMS: {
@@ -123,20 +120,22 @@ public class OrderPaymentController {
 					break;
 				}
 			}
-			model.addAttribute("order", order);
 			validated_order.setFinalPrice(order.getFinalPrice());
-			validated_order.setPlayerName(order.getPlayerName());
+			//validated_order.setPlayerName(order.getPlayerName());
 			if(order.getCreationDate() == null) {
 				order.setCreationDate(new Date());
 				validated_order.setCreationDate(order.getCreationDate());
 				log.debug("Saving order to database (1)");
-				validated_order = orderService.save(validated_order);
+				order = orderService.save(validated_order);
+				order.setId(validated_order.getId());
+				
 				eventPublisher.publishEvent(EventBuilder.forType(EventType.ORDER_CREATE_EVENT).withOrder(validated_order).withActor(validated_order.getUser()).toEvent());
 			}
 			else {
 				log.debug("Saving order to database (2)");
-				order = orderService.save(validated_order);
+				order = orderService.save(order);
 			}
+			model.addAttribute("order", order);
 		}
 		
 		else {

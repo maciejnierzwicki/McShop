@@ -15,13 +15,21 @@ public class Przelewy24ConfigForm extends BankTransferConfigForm {
 	@NotBlank(message = "Należy podać numer id sklepu Przelewy24.")
 	private int shopId;
 	
+	@NotBlank(message = "Należy podać numer id sprzedawcy Przelewy24.")
+	private int merchantId;
+	
 	@NotBlank(message = "Należy podać klucz crc.")
 	private String crc;
+	
+	@NotBlank(message = "Należy podać klucz API.")
+	private String apiKey;
 	
 	public Przelewy24Config toConfig() {
 		Przelewy24Config config = new Przelewy24Config();
 		config.setShopId(this.shopId);
 		config.setCrc(this.crc);
+		config.setMerchantId(this.merchantId);
+		config.setApiKey(this.apiKey);
 		return config;
 	}
 

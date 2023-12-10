@@ -62,13 +62,13 @@ CREATE TABLE IF NOT EXISTS Orders (
 	id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	service_id BIGINT DEFAULT -1,
 	order_type TEXT NOT NULL,
-	amount FLOAT,
 	player_name VARCHAR(16) DEFAULT '',
 	user_id BIGINT,
 	creation_date DATETIME NOT NULL,
 	status TEXT NOT NULL,
 	paymentMethod TEXT NOT NULL,
 	finalPrice FLOAT DEFAULT 0.0 NOT NULL,
+	amount FLOAT,
 	FOREIGN KEY (service_id) REFERENCES Services(id),
 	FOREIGN KEY (user_id) REFERENCES Users(id)
 );

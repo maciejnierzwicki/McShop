@@ -23,9 +23,9 @@ public class MainPropertiesForm {
 	@NotBlank(message = "Wartość domyślnej grupy nie może być pusta.")
 	private String defaultUserRole = "USER";
 	
-	private boolean registrationsEnabled = true;
 	private boolean setupMode = true;
 	private boolean serversColumn = true;
+	private boolean registrations = true;
 	
 	@NotBlank(message = "Wartość znacznika gracza nie może być pusta.")
 	private String playerPlaceholder;

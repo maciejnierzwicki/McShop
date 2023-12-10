@@ -28,19 +28,20 @@ public class PageErrorController implements ErrorController {
 	        	log.debug("403 template");
 	        	model.addAttribute("VIEW_FILE", "errors/403");
 	        	model.addAttribute("VIEW_NAME", "403");
+	        	return ControllerCommons.ROOT_VIEW_FILE_NAME;
 	        }
 	        else if(statusCode == HttpStatus.NOT_FOUND.value()) {
 	        	log.debug("404 template");
 	        	model.addAttribute("VIEW_FILE", "errors/404");
 	        	model.addAttribute("VIEW_NAME", "404");
+	        	return ControllerCommons.ROOT_VIEW_FILE_NAME;
 	        }
+	        
 	    }
-	    else {
-	    	log.debug("errors template");
-	    	model.addAttribute("VIEW_FILE", "errors/error");
-	    	model.addAttribute("VIEW_NAME", "error");
-	    }
-	    return ControllerCommons.ROOT_VIEW_FILE_NAME;
+    	log.debug("errors template");
+    	model.addAttribute("VIEW_FILE", "errors/error");
+    	model.addAttribute("VIEW_NAME", "error");
+    	return ControllerCommons.ROOT_VIEW_FILE_NAME;
 	}
 
 }

@@ -120,7 +120,7 @@ public class DotPayPaymentValidationService implements BankTransferValidationSer
 	}
 	
 	@Override
-	public PaymentValidationResult validateBankTransfer(HttpServletRequest http_req, String requestBody, BankTransferConfig bankTransferConfig) {
+	public <T> PaymentValidationResult validateBankTransfer(HttpServletRequest http_req, T requestBody, BankTransferConfig bankTransferConfig) {
 		if(!(bankTransferConfig instanceof DotPayConfig)) {
 			throw new IllegalStateException("Invalid bank transfer configuration passed as parameter");
 		}
@@ -128,7 +128,8 @@ public class DotPayPaymentValidationService implements BankTransferValidationSer
 		PaymentValidationResult result = new PaymentValidationResult();
 		String ip_address = http_req.getRemoteAddr();
 		if(!dotPayConfig.getAllowedIPs().contains(ip_address)) { log.debug("Request sender IP " + ip_address + " is not allowed in Dotpay configuration"); return result; }
-		Map<String, String> map = toMap(requestBody);
+		String body = (String) requestBody;
+		Map<String, String> map = toMap(body);
 		if(!isPaid(map)) { return result; }
 		long order_id = getOrderID(map);
 		log.debug("Returned order id: " + order_id);

@@ -4,6 +4,8 @@ import java.util.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,7 +34,9 @@ public class Order {
 	@Column(name = "id")
 	private Long id;
 	
+	
 	@Column(name = "order_type")
+	@Enumerated(EnumType.STRING)
 	private OrderType orderType;
 	
 	@OneToOne
@@ -42,10 +46,12 @@ public class Order {
 	@Column(name = "creation_date")
 	private Date creationDate;
 	
+	@Enumerated(EnumType.STRING)
 	private OrderStatus status = OrderStatus.WAITING_PAYMENT;
 	
 	private Double finalPrice = 0.0;
 	
+	@Enumerated(EnumType.STRING)
 	private PaymentMethod paymentMethod = null;
 	
 	@OneToOne
@@ -55,7 +61,7 @@ public class Order {
 	@Column(name = "player_name")
 	private String playerName;
 	
-	/* AMOUNT OF FUNDS TO ADD */
+	/** AMOUNT OF FUNDS TO ADD */
 	private Double amount;
 
 }

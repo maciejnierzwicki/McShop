@@ -1,15 +1,14 @@
 <div th:fragment="przelewy24">
-	<form method="GET" action="https://sklep.przelewy24.pl" class="mt-3 mb-3 border border-dark">
+	<form method="POST" th:action="@{/order/payment/przelewy24}" class="mt-3 mb-3 border border-dark">
 		<h4 class="bg-primary text-white border-bottom border-dark">Zapłać przez Przelewy24</h4>
 		<div class="mt-3">
 			<img th:src="@{/images/Przelewy24_logo.png}" class="col-9 mx-auto border border-dark">
 		</div>
-		<input type="hidden" name="z24_id_sprzedawcy" th:value="${bankTransferConfig.shopId}" />
-		<input type="hidden" name="z24_crc" th:value="${bankTransferConfig.crc}" />
-		<input type="hidden" name="z24_opis" th:value="${order.id}" />
-		<input type="hidden" name="z24_nazwa" th:value="${order.service.name}" />
-		<input type="hidden" name="z24_return_url" th:value="${properties.siteUrl + '/order/finish'}" />
-		<input type="hidden" name="z24_kwota" th:value="${order.service.priceBankTransfer} * 100" />
+		<input type="hidden" name="id" id="id" th:value="${order.id}" />
+		<div class='form-group'>
+			<label for="email" class="fw-bold">Adres e-mail<br><small>(Do wysyłki powiadomienie z serwisu Przelewy24)</small></label>
+			<input type="email" class="form-control text-center w-75 mx-auto" name="email" id="email" required />
+		</div>
 		<div class="text-center">
 			Kwota do zapłaty: <span th:text="${#numbers.formatDecimal(order?.finalPrice,1,2,'COMMA')}" class="fw-bold">KWOTA</span> zł<br>
 			<input type="submit" class="btn btn-primary rounded-0 mt-2 mb-1 border border-1 border-dark text-white text-center" value="Zapłać">

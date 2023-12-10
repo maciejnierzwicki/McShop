@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -45,30 +46,7 @@ public class OrderController {
 		return new OrderPaymentMethodForm();
 	}
 	
-	/*
-	@PostMapping
-	public String processOrder(Model model, @ModelAttribute(name = "order") @Valid Order order, Errors errors) {
-		if(errors.hasErrors() || !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) {
-			log.debug("Invalid order or service, redirecting");
-			return "redirect:/";
-		}
-		log.debug("playerName = " + order.getPlayerName());
-		User user = AuthUtils.getAuthenticatedUser();
-		if(user != null) {
-			log.debug("applying user info");
-			order.setUser(user);	
-		}
-		else {
-			log.debug("is not logged user");
-		}
-		model.addAttribute("paymentMethods", ServiceUtils.getAvailablePaymentMethods(order.getService(), user));
-		model.addAttribute("paymentMethodForm", paymentMethodForm());
-		model.addAttribute("VIEW_FILE", "order");
-		model.addAttribute("VIEW_NAME", "order");
-		return ControllerCommons.ROOT_VIEW_FILE_NAME;
-	}
-	*/
-	//TODO: DOKOŃCZYĆ
+
 	@PostMapping
 	public String processOrder(Model model, @ModelAttribute(name = "order") @Valid Order validated_order, Errors errors) {
 		if(errors.hasErrors() || !serviceValidator.hasAnyWorkingPaymentMethod(order.getService())) {
@@ -95,13 +73,8 @@ public class OrderController {
 	}
 	
 	
-	@GetMapping(path = "/finish") 
-	public String getOrderFinish() {
-		return "redirect:/";
-	}
-	
-	@PostMapping(path = "/finish")
-	public String postOrderFinish(Model model, SessionStatus sessionStatus) {
+	@RequestMapping(path = "/finish", method = { RequestMethod.GET, RequestMethod.POST })
+	public String showOrderFinish(Model model, SessionStatus sessionStatus) {
 		sessionStatus.setComplete();
 		model.addAttribute("VIEW_FILE", "orderfinish");
 		model.addAttribute("VIEW_NAME", "orderfinish");

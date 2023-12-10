@@ -31,8 +31,12 @@ import pl.maciejnierzwicki.mcshop.web.form.admin.paymentconfiguration.banktransf
 public class Przelewy24Config extends BankTransferConfig {
 	
 	private int shopId;
+	private int merchantId;
 	private String crc;
+	private String apiKey;
 	private final String targetUrl = "https://sklep.przelewy24.pl/zakup.php";
+	private final String transactionRegisterUrl = "https://secure.przelewy24.pl/api/v1/transaction/register";
+	private final String transactionVerifyUrl = "https://secure.przelewy24.pl/api/v1/transaction/verify";
 	private List<String> allowedIPs = new ArrayList<>();
 	private String przelewy24ConfigFilePath;
 	
@@ -54,6 +58,8 @@ public class Przelewy24Config extends BankTransferConfig {
 		Przelewy24ConfigForm form = new Przelewy24ConfigForm();
 		form.setShopId(this.shopId);
 		form.setCrc(this.crc);
+		form.setMerchantId(this.merchantId);
+		form.setApiKey(this.apiKey);
 		return form;
 	}
 
@@ -62,12 +68,16 @@ public class Przelewy24Config extends BankTransferConfig {
 		Przelewy24ConfigForm przelewy24_form = (Przelewy24ConfigForm) form;
 		setShopId(przelewy24_form.getShopId());
 		setCrc(przelewy24_form.getCrc());
+		setMerchantId(przelewy24_form.getMerchantId());
+		setApiKey(przelewy24_form.getApiKey());
 	}
 	
 	public void apply(Properties properties) {
 		this.shopId = Integer.parseInt(properties.getProperty("shopId"));
 		this.allowedIPs = Arrays.asList(properties.getProperty("allowedIPs").split(","));
 		this.crc = properties.getProperty("crc");
+		this.merchantId = Integer.parseInt(properties.getProperty("merchantId"));
+		this.apiKey = properties.getProperty("apiKey");
 	}
 
 	@Override
@@ -75,7 +85,9 @@ public class Przelewy24Config extends BankTransferConfig {
 		Properties props = new Properties();
 		props.setProperty("crc", this.crc);
 		props.setProperty("shopId", String.valueOf(this.shopId));
+		props.setProperty("merchantId", String.valueOf(this.merchantId));
 		props.setProperty("allowedIPs", StringUtils.join(this.allowedIPs, ','));
+		props.setProperty("apiKey", this.apiKey);
 		try {
 			propertiesStorage.save(props, przelewy24ConfigFilePath);
 		} catch (FileNotFoundException e) {

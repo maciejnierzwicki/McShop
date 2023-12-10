@@ -2,12 +2,21 @@
 	<form method="POST" th:object="${bankTransferForm}" th:action="@{/admin/paymentconfiguration/banktransfer}" class="border border-dark mt-3 text-center">
 		<h4 class="bg-primary text-white border-bottom border-dark">Przelewy24</h4>
 		<div class='form-group'>
-			<label for="shopId" class="fw-bold">ID sklepu w Przelewy24</label>
+			<label for="shopId" class="fw-bold">ID sklepu w Przelewy24<br><small>(Domyślnie ID sklepu to ID sprzedawcy)</small></label>
+			
 			<input type="number" class="form-control text-center w-75 mx-auto" name="shopId" id="shopId" th:field="*{shopId}" th:value="${bankTransferForm.shopId}" required />
+		</div>
+		<div class='form-group'>
+			<label for="merchantId" class="fw-bold">ID sprzedawcy w Przelewy24</label>
+			<input type="number" class="form-control text-center w-75 mx-auto" name="merchantId" id="merchantId" th:field="*{merchantId}" th:value="${bankTransferForm.merchantId}" required />
 		</div>
 		<div class='form-group'>
 			<label for="crc" class="fw-bold">Klucz crc</label>
 			<input type="text" class="form-control text-center w-75 mx-auto" name="crc" id="crc" th:field="*{crc}" th:value="${bankTransferForm.crc}" required />
+		</div>
+		<div class='form-group'>
+			<label for="apiKey" class="fw-bold">Klucz API</label>
+			<input type="text" class="form-control text-center w-75 mx-auto" name="apiKey" id="crc" th:field="*{apiKey}" th:value="${bankTransferForm.apiKey}" required />
 		</div>
 		<button class="btn btn-primary rounded-0 mt-3 mb-1 border border-1 border-dark text-white" type="submit">Zapisz</button>
 	</form>

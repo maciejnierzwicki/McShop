@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import pl.maciejnierzwicki.mcshop.dbentity.Role;
 import pl.maciejnierzwicki.mcshop.dbentity.User;
+import pl.maciejnierzwicki.mcshop.properties.MainProperties;
 import pl.maciejnierzwicki.mcshop.repository.RoleRepository;
 import pl.maciejnierzwicki.mcshop.service.UserService;
 import pl.maciejnierzwicki.mcshop.web.controller.ControllerCommons;
@@ -33,6 +34,8 @@ public class RegistrationController {
 	private UserService userService;
 	@Autowired
 	private RoleRepository roleRepo;
+	@Autowired
+	private MainProperties properties;
 	
 	@ModelAttribute("registration")
 	public NewUserForm registration() {
@@ -41,6 +44,7 @@ public class RegistrationController {
 	
 	@GetMapping
 	public String showRegistration(@ModelAttribute("registration") NewUserForm form, Model model) {
+		if(!properties.isRegistrations()) { return "redirect:/"; }
 		model.addAttribute("VIEW_FILE", "register");
 		model.addAttribute("VIEW_NAME", "register");
 		return ControllerCommons.ROOT_VIEW_FILE_NAME;
@@ -48,6 +52,7 @@ public class RegistrationController {
 	
 	@PostMapping
 	public String processRegistration(@Valid @ModelAttribute("registration") NewUserForm form, Errors errors, Model model) {
+		if(!properties.isRegistrations()) { return "redirect:/"; }
 		model.addAttribute("VIEW_FILE", "register");
 		model.addAttribute("VIEW_NAME", "register");
 		if(errors.hasErrors()) {

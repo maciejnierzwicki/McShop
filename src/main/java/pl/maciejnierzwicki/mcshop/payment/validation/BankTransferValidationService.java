@@ -14,6 +14,6 @@ import pl.maciejnierzwicki.mcshop.payment.config.banktransfer.BankTransferConfig
 @Service
 public interface BankTransferValidationService {
 	
-	PaymentValidationResult validateBankTransfer(HttpServletRequest http_req, String requestBody, BankTransferConfig bankTransferConfig);
+	<T> PaymentValidationResult validateBankTransfer(HttpServletRequest http_req, T requestBody, BankTransferConfig bankTransferConfig);
 
 }

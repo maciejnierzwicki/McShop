@@ -25,6 +25,7 @@ public class MainProperties {
 	private String dateFormat = "dd.MM.yyyy HH:mm";
 	private String eventDateFormat = "dd.MM.yyyy HH:mm:ss";
 	private boolean serversColumn = true;
+	private boolean registrations = true;
 	
 	private String mainPropertiesFilePath;
 	private IPropertiesStorage propertiesStorage;
@@ -55,6 +56,7 @@ public class MainProperties {
 		this.dateFormat = form.getDateFormat();
 		this.eventDateFormat = form.getEventDateFormat();
 		this.serversColumn = form.isServersColumn();
+		this.registrations = form.isRegistrations();
 	}
 	
 	public void apply(Properties properties) {
@@ -62,6 +64,7 @@ public class MainProperties {
 		this.siteUrl = properties.getProperty("siteURL");
 		this.playerPlaceholder = properties.getProperty("playerPlaceholder");
 		this.serversColumn = Boolean.parseBoolean(properties.getProperty("serversColumn"));
+		this.registrations = Boolean.parseBoolean(properties.getProperty("registrations"));
 		this.setupMode = Boolean.parseBoolean(properties.getProperty("setupMode"));
 		
 		try {
@@ -98,6 +101,7 @@ public class MainProperties {
 		form.setEventDateFormat(getEventDateFormat());
 		form.setServersColumn(isServersColumn());
 		form.setSiteUrl(getSiteUrl());
+		form.setRegistrations(isRegistrations());
 		return form;
 	}
 	
@@ -112,6 +116,7 @@ public class MainProperties {
 		props.setProperty("maxEventsPerPage", String.valueOf(this.maxEventsPerPage));
 		props.setProperty("dateFormat", this.dateFormat);
 		props.setProperty("eventDateFormat", this.eventDateFormat);
+		props.setProperty("registrations", String.valueOf(this.registrations));
 		try {
 			propertiesStorage.save(props, mainPropertiesFilePath);
 		} catch (FileNotFoundException e) {

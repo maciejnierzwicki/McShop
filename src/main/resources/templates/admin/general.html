@@ -52,6 +52,12 @@
 							Wyświetlanie oddzielnej kolumny z serwerami
 						</label>
 					</div>
+					<div class="form-check">
+						<label for="registrations" class="form-check-label" >
+							<input type="checkbox" class="form-check-input mt-1 mb-1" name="registrations" id="registrations" th:field="*{registrations}" th:checked="${propertiesForm.registrations}"/>
+							Możliwość rejestrowania nowych kont
+						</label>
+					</div>
 				</div>
 				<button class="btn btn-primary w-50 rounded-0 mt-3 mb-1 border border-1 border-dark text-white" type="submit">Zapisz</button>
 			</form>

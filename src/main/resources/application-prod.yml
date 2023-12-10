@@ -3,12 +3,20 @@ spring:
     cache: true
   jpa:
     hibernate:
-      use-new-id-generator-mappings: false
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   sql:
     init:
       schema-locations:
       - classpath:schema.sql
       mode: always
+server:
+  ssl:
+    enabled: true
+    key-store: keystore.p12
+    key-store-password: mcshop
+    key-store-type: PKCS12
+    key-alias: tomcat
 files:
   main-properties-file-path: main.properties
   database-file-path: database.properties

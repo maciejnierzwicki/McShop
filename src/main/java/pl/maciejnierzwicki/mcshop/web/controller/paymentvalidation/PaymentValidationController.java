@@ -1,8 +1,9 @@
-package pl.maciejnierzwicki.mcshop.web.controller.urlc;
+package pl.maciejnierzwicki.mcshop.web.controller.paymentvalidation;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jackson.JsonObjectDeserializer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,10 +19,13 @@ import pl.maciejnierzwicki.mcshop.orderdata.OrderStatus;
 import pl.maciejnierzwicki.mcshop.payment.PaymentValidationResult;
 import pl.maciejnierzwicki.mcshop.payment.config.banktransfer.BankTransferConfig;
 import pl.maciejnierzwicki.mcshop.payment.validation.BankTransferValidationService;
+import pl.maciejnierzwicki.mcshop.payment.validation.impl.dotpay.DotPayPaymentValidationService;
+import pl.maciejnierzwicki.mcshop.payment.validation.impl.przelewy24.Przelewy24PaymentValidationService;
+import pl.maciejnierzwicki.mcshop.payment.validation.impl.przelewy24.Przelewy24TransactionResult;
 import pl.maciejnierzwicki.mcshop.service.OrderService;
 
 /***
- * This controller handles all requests sent to <b>/urlc</b> path.<br>
+ * This controller handles all requests sent to <b>/paymentvalidation</b> path.<br>
  * Its purpose is to process notifications from bank transfer payment providers.<br>
  * These notifications contain important data related to orders made by application users.
  * @author Maciej Nierzwicki
@@ -29,9 +33,9 @@ import pl.maciejnierzwicki.mcshop.service.OrderService;
  */
 @ResponseBody
 @Controller
-@RequestMapping(path = "/urlc")
+@RequestMapping(path = "/paymentvalidation")
 @Slf4j
-public class UrlcController {
+public class PaymentValidationController {
 
 	@Autowired
 	private OrderService orderService;
@@ -43,7 +47,7 @@ public class UrlcController {
 	
 	@GetMapping
 	public String get() {
-		log.debug("urlc redirect");
+		log.debug("payment validation GET redirect");
 		return "redirect:/";
 	}
 	
@@ -55,8 +59,17 @@ public class UrlcController {
 	 * @param requestBody {@link String}
 	 * @return {@link ResponseEntity}
 	 */
-	@PostMapping
+	@PostMapping("/dotpay")
 	public ResponseEntity<String> process(HttpServletRequest http_req, @RequestBody String body) {
+		return validate(http_req, body);
+	}
+	
+	@PostMapping("/przelewy24")
+	public ResponseEntity<String> process(HttpServletRequest http_req, @RequestBody Przelewy24TransactionResult body) {
+		return validate(http_req, body);
+	}
+	
+	public <T> ResponseEntity<String> validate(HttpServletRequest http_req, T body) {
 		if(bankTransferConfig == null || bankTransferValidationService == null) {
 			log.debug("bankTransferConfig or bankTransferValidationService is null");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("BAD_REQUEST");
